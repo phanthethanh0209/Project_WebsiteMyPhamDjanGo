@@ -1,0 +1,441 @@
+
+{% extends "pages/layout.html" %} {% block title %} Trang chủ admin {% endblock %} 
+{% block content %} 
+{% load static %}
+
+<style>
+ .custom-box {
+    background-color: #f8f9fa; /* Màu xám trắng nhạt */
+    border: 1px solid #ced4da; /* Viền xám */
+    /* border-radius: 8px; */
+    padding: 16px; /* Khoảng cách bên trong */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  */
+
+ }
+.star-filter {
+    border: 1px solid #ced4da; /* Viền mặc định */
+    background-color: #fff; /* Nền trắng mặc định */
+    color: #333; /* Màu chữ mặc định */
+}
+
+.star-filter.active {
+    border-color: #ffa500; /* Viền màu cam khi được chọn */
+    background-color: #fff8e1; /* Nền nhạt hơn để tạo hiệu ứng (tuỳ chọn) */
+    color: #ffa500; /* Màu chữ cam (tuỳ chọn) */
+}
+
+
+
+
+</style>
+<div id="content">
+    <div class="container-lg ">
+        <div class="card mb-4 py-5">
+            <div class="row ">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="product-card d-flex justify-content-center">
+                        <img src="{% static 'img/' %}{{ SanPham.2 }}" alt="{{ SanPham.1 }}">
+                    </div>
+                    <script src="~/root/js/slide.js"></script>
+                    <div class="share-icon d-flex justify-content-center align-items-center">
+                        <div>Chia sẻ</div>
+                        <div><a class="icon-fb" target="_blank" href="https://www.facebook.com/"><i class="ti-facebook "></i></a></div>
+                        <div><a class="icon-twitter" target="_blank" href="https://twitter.com/?lang=vi"><i class="ti-twitter "></i></a></div>
+                        <div><a class="icon-ins" target="_blank" href="https://www.instagram.com/"><i class="ti-instagram "></i></a></div>
+                    </div>
+                </div>
+    
+                <div class="col-lg-6 col-md-6  col-sm-12">
+                    <div class="first-info-product">
+                        <h2>{{ SanPham.1 }}</h2> <!--Tên sản phẩm-->
+                        <div class="status-product font-18px  d-flex align-items-center ">
+                            <div>Phân loại: <span class="main-color">{{ SanPham.9 }}</span></div>
+                            <div>Thương hiệu: <span class="main-color">{{ SanPham.10 }}</span></div>                     
+                        </div>
+                        <div class="rating-box font-18px d-flex align-items-center ">
+                            <div class="text-rate">Đánh giá: </div> <!--Số sao đánh giá tổng-->
+                            <div class="rating-star d-flex align-items-center">
+                                {% if SaoTB == 1 %}
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                {% elif SaoTB == 2 %}
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                {% elif SaoTB == 3 %}
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                {% elif SaoTB == 4 %}
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class=" fa-solid fa-star"></i>
+                                {% elif SaoTB == 5 %}
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                <i class="star-gold fa-solid fa-star"></i>
+                                {% endif%}
+                            </div>
+                            <div class="quantity-rating">({{SoBaiDG}})</div> <!--Số bài đánh giá tổng-->
+                        </div>
+                    </div>
+    
+                    <div class="second-info-product">
+                        
+                        {% if KM %}
+                        <div class="price d-flex align-items-center">
+                            <!-- Hiển thị giá sau khuyến mãi -->
+                            <span class="price-new">{{ KM.GiaSauKM }}</span><span class="VND-new"></span>
+                            <span class="vnd">₫</span>
+                            <!-- Hiển thị giá bán gốc -->
+                            <span class="price-old">{{ SanPham.6 }}₫</span> <!--Giá bán gốc-->
+                        </div>
+                        <div class="save-money font-18px">
+                            (Tiết kiệm: <span class="main-color">{{ KM.TienGiam }}</span> <!--Giá giảm-->
+                            <span class="vnd">₫</span>)
+                        </div>
+                        {% else %}
+                        <div class="price d-flex align-items-center">
+                            <!-- Hiển thị giá gốc nếu không có khuyến mãi -->
+                            <span class="price-new">{{ SanPham.6 }}</span><span class="VND-new"></span>
+                            <span class="vnd">₫</span>
+                        </div>
+                        {% endif %}
+    
+                        <div class="information-product font-18px d-flex flex-column">
+                            <div class="details">
+                                <div class="details-box d-flex align-items-center">
+                                    <div class="title-details">Mã sản phẩm:</div>
+                                    <div class="property">{{ SanPham.0}}</div>
+                                </div>
+    
+                                <div class="details-box d-flex align-items-center">
+                                    <div class="title-details">Ngày sản xuất:</div>
+                                    <div class="property">{{ SanPham.3|date:"d-m-Y"}}</div>
+                                </div>
+    
+                                <div class="details-box d-flex align-items-center">
+                                    <div class="title-details">Hạn sử dụng:</div>
+                                    <div class="property">{{ SanPham.4|date:"d-m-Y" }}</div>
+                                </div>
+    
+                                <div class="details-box d-flex align-items-center">
+                                    <div class="title-details">Trọng lượng:</div>
+                                    <div class="property">{{ SanPham.8}} g</div>
+                                </div>
+                               
+                                <div class="details-box d-flex align-items-center">
+                                    <div class="title-details">Mô tả:</div>
+                                    
+                                </div>
+                            </div>
+                            <div class="box-countdown">
+                                <div class="hot-deals d-flex align-items-center p-8">
+                                    <div class="text">
+                                        <p>{{ SanPham.5}}</p>
+                                    </div>
+                                </div>
+                                <div class="best-selling">
+                                    
+                                    <div class="best-selling-bar ">
+                                        <div class="sold-bar"></div>
+                                    </div>
+                                    <div class="icon-fire">
+                                        <p> 🔥 Mua ngay! Ưu đãi liền tay!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buy-amount d-flex align-items-center">
+                                <div class="quantity-text">Số lượng: </div>
+                                <button class="d-flex align-items-center justify-content-center minus-btn" onclick="handleMinus()"><i class="ti-minus"></i></button>
+                                <input type="text" name="amount" id="amount" value="1">
+                                <button class="d-flex align-items-center justify-content-center plus-btn" onclick="handlePlus()"><i class="ti-plus"></i></button>
+                                <script src="{% static 'js/handlePlus-Minus.js' %}"></script>
+                            </div>
+    
+                            <div class="btn-actions d-flex align-items-center justify-content-center">
+                               <button id="btn-buynow" class="btn-buynow">
+                                    <a href="/addCart/?action=addcart&id_product={{ SanPham.0 }}" class="text d-block text-black ">Thêm vào giỏ hàng</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commit-product d-flex flex-column">
+                        <div class="endow row">
+                            <div class="item col-md-6  d-flex align-items-center">
+                                <img src="{% static 'img/icon-ship.png' %}" alt="">
+                                <span class="">Giao hàng nhanh toàn quốc</span>
+                            </div>
+                            <div class="item col-md-6  d-flex align-items-center">
+                                <img src="{% static 'img/icon-gift.png' %}" alt="">
+                                <span class="">Luôn kèm quà tặng khi mua</span>
+                            </div>
+                        </div>
+                        <div class="endow row">
+                            <div class="item col-md-6  d-flex align-items-center ">
+                                <img src="{% static 'img/icon-coupon.png' %}" alt="">
+                                <span class="">Cấp mã Coupon tiết kiệm cho bạn hằng tuần</span>
+                            </div>
+                            <div class="item col-md-6  d-flex align-items-center  ">
+                                <img src="{% static 'img/icon-commit.png' %}" alt="">
+                                <span class="">Cam kết chính hãng, bồi thường 200% nếu phát hiện hàng giả</span>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>   
+
+
+
+
+
+
+
+
+
+
+
+       
+            <!--ĐÁNH GIÁ SẢN PHẨM-->
+            <div class="row">
+                <div class="col-xl-12">
+                    <h3 id="comment">Đánh giá sản phẩm</h3>
+                    <div class="container-rating">
+                        <div class="comment d-flex flex-column">
+                            {% if KtraDG is not False %}  <!--Nếu người dùng đã đánh giá sản phẩm đó rồi-->
+                            <div class="tab-title align-items-center">
+                                <!--Form đánh giá sản phẩm-->
+                                <form method="post" action="/shop_detail/danhGia/{{ SanPham.0 }}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group w-25">
+                                        <label for="SoSao" class="fw-b">Đánh giá của bạn:</label>
+                                        <select class="form-control mt-2" id="SoSao" name="SoSao">
+                                            <option value="">Chọn đánh giá</option>
+                                            <option value="1">1 sao</option>
+                                            <option value="2">2 sao</option>
+                                            <option value="3">3 sao</option>
+                                            <option value="4">4 sao</option>
+                                            <option value="5">5 sao</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group w-100 mt-2">
+                                        <label for="NoiDung" class="fw-b">Nhận xét của bạn:</label>
+                                        <textarea class="form-control mt-2" rows="5" id="NoiDung" name="NoiDung"></textarea>
+                                        <input type="text" name="MaSP" value="{{ SanPham.0 }}" hidden>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-2">Gửi đánh giá</button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            
+
+                            <!-- <div class="tab-title d-flex justify-content-between align-items-center">
+                                <p>Danh sách đánh giá</p>
+                            </div> -->
+                            <div class="rating-box font-18px d-flex align-items-center custom-box ">
+                                
+                                <div class="col-md-6 d-flex align-items-center ">
+                                    <div class="text-rate">Đánh giá: </div>
+                                    <div class="rating-star d-flex align-items-center">
+                                        {% if SaoTB == 5 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i> 
+                                        {% elif SaoTB == 4 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i> 
+                                        {% elif SaoTB == 3 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i> 
+                                        {% elif SaoTB == 2 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i> 
+                                        {% elif SaoTB == 1 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i> 
+                                        {% else %}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i> 
+                                        {% endif %}
+                                    </div>
+                                    <div class="quantity-rating">{{ SaoTB}}/5 ({{ SoBaiDG}} đánh giá)</div>
+                                </div>
+
+                                <!-- <div class="col-md-6 float-right">
+                                    <div class="filter-buttons d-flex justify-content-between">
+                                        
+                                        
+                                        <form method="post" action="/shop_detail/{{ SanPham.0 }}">
+                                            {% csrf_token %}
+                                            <button style="border: 1px solid #ced4da;" type="submit" name="star" value="1" class="star-filter btn {% if request.POST.star == '1' %}active{% endif %}">
+                                                1 Sao
+                                            </button>
+        
+                                            <button style="border: 1px solid #ced4da;" type="submit" name="star" value="2" class="star-filter btn {% if request.POST.star == '2' %}active{% endif %}">
+                                                2 Sao
+                                            </button>
+        
+                                            <button  style="border: 1px solid #ced4da;" type="submit" name="star" value="3" class="star-filter btn {% if request.POST.star == '3' %}active{% endif %}">
+                                                3 Sao
+                                            </button>
+        
+                                            <button style="border: 1px solid #ced4da;" type="submit" name="star" value="4" class="star-filter btn {% if request.POST.star == '4' %}active{% endif %}">
+                                                4 Sao
+                                            </button>
+        
+                                            <button style="border: 1px solid #ced4da;" type="submit" name="star" value="5" class="star-filter btn {% if request.POST.star == '5' %}active{% endif %}">
+                                                5 Sao
+                                            </button>
+                                        </form> 
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-6 float-right">
+                                    <div class="filter-buttons d-flex justify-content-between">
+                                        <form method="post" action="/shop_detail/{{ SanPham.0 }}">
+                                            {% csrf_token %}
+                                            <button style="border: 1px solid #ced4da; margin-right: 10px;" type="submit" name="star" value="1" class="star-filter btn {% if request.POST.star == '1' %}active{% endif %}">
+                                                1 Sao
+                                            </button>
+                                
+                                            <button style="border: 1px solid #ced4da; margin-right: 10px;" type="submit" name="star" value="2" class="star-filter btn {% if request.POST.star == '2' %}active{% endif %}">
+                                                2 Sao
+                                            </button>
+                                
+                                            <button style="border: 1px solid #ced4da; margin-right: 10px;" type="submit" name="star" value="3" class="star-filter btn {% if request.POST.star == '3' %}active{% endif %}">
+                                                3 Sao
+                                            </button>
+                                
+                                            <button style="border: 1px solid #ced4da; margin-right: 10px;" type="submit" name="star" value="4" class="star-filter btn {% if request.POST.star == '4' %}active{% endif %}">
+                                                4 Sao
+                                            </button>
+                                
+                                            <button style="border: 1px solid #ced4da;" type="submit" name="star" value="5" class="star-filter btn {% if request.POST.star == '5' %}active{% endif %}">
+                                                5 Sao
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-8">
+                                                
+                
+                                    {% for danhGia in DSDanhGia %}
+                                    <div class="card p-3">                
+                                        <div class="d-flex justify-content-between align-items-center">                
+                                            <div class="user d-flex flex-row align-items-center">                
+                                                <img src="https://i.imgur.com/hczKIze.jpg" width="30" class="user-img rounded-circle mr-2">
+                                                <span><small class="font-weight-bold text-primary">{{ danhGia.0 }}</small> <small class="font-weight-bold"> </small></span>                                          
+                                            </div>       
+                                            <small>{{ danhGia.2|date:"d-m-Y H:i:s" }}</small>
+                                        </div>
+                                        <div class="action d-flex justify-content-between mt-2 align-items-center"> 
+                                            <div class="icons align-items-center">  
+                                                {{ danhGia.1 }}                                                             
+                                            </div>               
+                                            <div class="reply px-4">
+                                                {%if danhGia.3 == 1%}
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                {%elif danhGia.3 == 2%}
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                {%elif danhGia.3 == 3%}
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                {%elif danhGia.3 == 4%}
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class=" fa-solid fa-star"></i>
+                                                {%elif danhGia.3 == 5%}
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                <i class="star-gold fa-solid fa-star"></i>
+                                                {%endif%}
+                                            </div>                
+                                            
+                                        </div>
+                                    </div> 
+                                    <br>
+                                    {% endfor %}                                                
+                                </div>                                
+                            </div>   
+
+                            
+
+                            
+                            
+                    
+                        </div>
+
+                        
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+           
+        <div class="container mt-5">
+                         
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+{% endblock %}

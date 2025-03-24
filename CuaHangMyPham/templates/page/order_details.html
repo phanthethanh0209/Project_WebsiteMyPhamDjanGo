@@ -1,0 +1,221 @@
+{% extends "pages/layout.html" %} {% block title %} Trang chủ {% endblock %} {% block content %} {% load static %}
+<style>
+    .title-page {
+        margin-bottom: 2rem;
+        margin-top: 0;
+        font-weight: bold;
+        font-size: 1.625pc;
+        color: #222;
+    }
+    
+    #cart [class~=cart-grid] [class~=cart-items] {
+        padding-top: 0;
+        margin-bottom: .3125in;
+        padding-right: 0;
+        padding-bottom: 0;
+        padding-left: 0;
+        list-style: none;
+    }
+    
+    #cart [class~=cart-grid] [class~=cart-items] [class~=cart-item]:nth-child(2n+1) {
+        background: #eff5f6;
+    }
+    
+    #cart .cart-grid .cart-items .cart-item {
+        padding-top: 1.25pc;
+        padding-right: 1.25pc;
+        padding-bottom: 1.25pc;
+        padding-left: 1.25pc;
+        border-image: none;
+        border-bottom-color: #fff;
+        border-bottom-style: solid;
+        border-bottom-width: .0625pc;
+    }
+    
+    #cart [class~=btn][class~=btn-primary] {
+        cursor: pointer;
+        font-size: 8.25pt;
+        margin-top: 0;
+        text-transform: uppercase;
+        margin-right: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        font-weight: 600;
+        border-top-color: transparent;
+        color: #fff;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        background: #343434;
+        border-radius: 1.125pc;
+        padding-top: .5625pc;
+        padding-right: 25px;
+        padding-bottom: .5625pc;
+        padding-left: 25px;
+    }
+    
+    [class~=cart-grid-right] [class~=cart-summary] {
+        padding-top: 20.25pt;
+        padding-right: 1.75pc;
+        padding-bottom: 30px;
+        padding-left: 1.75pc;
+        color: #fff;
+        background: #343434;
+    }
+    
+    [class~=cart-grid-right] [class~=cart-summary] [class~=cart-summary-products] {
+        margin-bottom: 11.25pt;
+    }
+    
+    #cart [class~=cart-grid] [class~=cart-items] [class~=cart-item] [class~=label] {
+        font-weight: 700;
+        text-transform: capitalize;
+        font-size: .875pc;
+        margin-bottom: 10px;
+    }
+    
+    #cart [class~=cart-grid] [class~=cart-items] [class~=cart-item] [class~=product-price] {
+        margin-bottom: .072916667in;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    #cart .cart-grid .cart-items .cart-item .product-line-info {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+    
+    #cart .product-price.total {
+        margin-top: 14.25pt;
+        margin-right: 5.25pt;
+        margin-left: 5.25pt;
+        font-size: 16px;
+    }
+    
+    #cart [class~=align-self-end] {
+        float: right;
+        margin-top: 2rem;
+    }
+    
+    #cart [class~=cart-grid] [class~=cart-items] [class~=cart-item] [class~=cart-line-product-actions] {
+        float: right;
+        line-height: 26.25pt;
+        height: 3.6875pc;
+        text-align: center;
+        font-size: .208333333in;
+color: #000;
+    }
+    
+    #cart .cart-grid .cart-items .cart-item {
+        background: #f4fbfc;
+    }
+    
+    [class~=cart-grid-right] [class~=cart-summary] [class~=summary-label] {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+    
+    [class~=cart-grid-right] [class~=cart-summary] [class~=cart-summary-line] {
+        padding-left: 20px;
+    }
+    
+    [class~=cart-grid-right] [class~=cart-summary] [class~=cart-summary-line] [class~=label] {
+        display: inline-block;
+        white-space: normal;
+    }
+    
+    .cart__total {
+        background: #f3f2ee;
+        padding: 35px 40px 40px;
+    }
+    
+    .cart__total ul {
+        margin-bottom: 25px;
+    }
+    
+    .cart__total ul li {
+        list-style: none;
+        font-size: 16px;
+        color: #444444;
+        line-height: 40px;
+        overflow: hidden;
+    }
+    
+    .cart__total ul li span {
+        font-weight: 700;
+        color: #e53637;
+        float: right;
+    }
+    
+    .cart__total .primary-btn {
+        display: block;
+        padding: 12px 10px;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+</style>
+<div class="container-md" id="cart">
+    <div class="cart-grid row py-5">
+        <div class="col-md-12 col-xs-12 check-info">
+            <h1 class="title-page">Đơn hàng của bạn</h1>
+            {% if not order_list %}
+            <div class="row">
+                <img class="img-fluid w-25" src="{% static 'assets/images/empty-order.png' %}" alt="" style="margin: 0 auto;">
+            </div>
+            {% else %} {% for order in order_list %}
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="py-3 fs-4">Mã đơn hàng: {{ order.order_id }}</p>
+                <div class="buttons_added fs-5 my-4 d-flex align-items-center">
+                    <span class="label px-3">Trạng thái:</span>
+                    <span class="fw-bold {% if order.status == 'Đã xác nhận' %} text-success {% else %} text-danger {% endif %}">{{ order.status }}</span>
+                </div>
+            </div>
+            <div class="cart-container">
+                <div class="cart-overview js-cart">
+                    <ul class="cart-items">
+                        {% for detail in order.details %}
+                        <li class="cart-item">
+                            <div class="product-line-grid row justify-content-between">
+                                <div class="product-line-grid-left col-md-2">
+                                    <span class="product-image media-middle">
+                                        <a href="/shop_detail/{{detail.product_id}}">
+                                            <img class="img-fluid" src="{% static 'img/' %}{{ detail.product_image }}" alt="">
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="product-line-grid-body col-md-5">
+<div class="product-line-info">
+                                        <span class="label-atrr"><a class="label text-black" href="/shop_detail/{{detail.product_id}}" data-id_customization="0">{{ detail.product_name }}</a></span>
+                                    </div>
+                                    <!-- <div class="product-line-info">
+                                        <span class="label-atrr"><a href="" data-id_customization="0"></a></span>
+                                    </div> -->
+                                    <div class="product-line-info product-price">
+                                        <span class="value">{{ detail.product_price }} ₫</span>
+                                    </div>
+                                </div>
+                                <div class="product-line-grid-right text-center product-line-actions col-md-5">
+                                    <div class="row text-center">
+                                        <div class="col-md-6 col">
+                                            <div class="label text-black">Số lượng:</div>
+                                            <div class="label text-black fs-6">{{ detail.quantity }}</div>
+                                        </div>
+                                        <div class="col-md-6 col price">
+                                            <div class="label">Tổng cộng:</div>
+                                            <div class="label fs-6">{{ detail.product_total }} ₫</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+            <h5 class="text-end fw-bold mb-3" style="color: red;">Thành tiền: {{ total_price }} ₫</h5>
+            <a href="{% url 'shop' %}" class="continue btn btn-primary pull-xs-right">Tiếp tục mua sắm</a> {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

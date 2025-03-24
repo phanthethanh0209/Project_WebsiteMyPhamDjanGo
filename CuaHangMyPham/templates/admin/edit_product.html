@@ -1,0 +1,75 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}Trang chủ admin{% endblock %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="background-color: lightblue; border-radius: 30px; padding: 30px">
+            <h2 class="w-100 text-center p-3 text-danger">CHỈNH SỬA 1 SẢN PHẨM</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="category">Tên loại</label>
+                    <select name="category" class="form-control" id="category">
+                        {% for category in maloai %}
+                            <option value="{{ category.id }}" {% if category.id == product.category.id %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div><br>
+                <div class="form-group">
+                    <label for="brand">Tên thương hiệu</label>
+                    <select name="brand" class="form-control" id="brand">
+                        {% for brand in mabrand %}
+                            <option value="{{ brand.id }}" {% if brand.id == product.brand.id %}selected{% endif %}>{{ brand.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div><br>
+                <div class="form-group">
+                    <label for="name">Tên sản phẩm</label>
+                    <input name="name" type="text" class="form-control" id="name" value="{{ form.name.value|default_if_none:product.name }}">
+                </div><br>
+                <div class="form-group">
+                    <label for="price">Giá sản phẩm</label>
+                    <input name="price" type="text" class="form-control" id="price" value="{{ form.price.value|default_if_none:product.price }}">
+                </div><br>
+                <div class="form-group">
+                    <label for="description">Mô tả</label>
+                    <input name="description" type="text" class="form-control" id="description" value="{{ form.description.value|default_if_none:product.description }}">
+                </div><br>
+                <div class="form-group">
+                    <label for="image">Hình ảnh</label>
+                    <input name="image" type="text" class="form-control" id="image" value="{{ form.image.value|default_if_none:product.image }}">
+                </div><br>
+
+                <!-- Button trigger modal -->
+                <div class="text-center" style=" display: flex; justify-content: center; ">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chỉnh sửa</button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận chỉnh sửa sản phẩm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có muốn chỉnh sửa sản phẩm không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-danger">Đồng ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

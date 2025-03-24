@@ -1,0 +1,39 @@
+{% extends "pages/layout.html" %} 
+{% block title %} Đăng ký 
+{% endblock %} 
+{% block content %} 
+{% load static %}
+<div class="container w-50 mt-3 mb-3" style="background-color: mistyrose; border-radius: 20px;">
+    <form method="post" class="w-50 m-auto" >
+        <h2 class="pt-2 text-center t text-danger">Đăng ký tài khoản</h2>
+        {% csrf_token %}
+        {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="TenTK">Tên tài khoản</label>
+            <input name="TenTK" type="text" class="form-control" id="TenTK" required>
+        </div>
+        <div class="form-group">
+            <label for="MatKhau">Mật khẩu</label>
+            <input name="MatKhau" type="password" class="form-control" id="MatKhau" required>
+        </div>
+        <!--Nhập lại mật khẩu-->
+        <div class="form-group">
+            <label for="MatKhau2">Nhập lại mật khẩu</label>
+            <input name="MatKhau2" type="password" class="form-control" id="MatKhau2" required>
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input name="Email" type="email" class="form-control" id="Email" required>
+        </div>
+
+        <!-- Button submit -->
+        <div class="text-center mt-2" style=" display: flex; justify-content: center;">
+            <button type="submit" class="btn btn-primary mb-2">Đăng ký</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

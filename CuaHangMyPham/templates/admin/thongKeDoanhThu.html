@@ -1,0 +1,233 @@
+{% extends "pages/layoutAd.html" %}
+
+{% block title %} Thống kê Doanh thu {% endblock %}
+
+{% block content %}
+
+
+<style>
+    .table
+    {
+        font-size: 0.8rem;
+    }
+    .card {
+        font-size: 0.1rem; /* Giảm kích thước font của card */
+        height: 60px;
+        
+    }
+
+    .card .card-title {
+        font-size: 1rem; /* Giảm kích thước tiêu đề */
+        margin-top: -10px;
+    }
+
+    .card .card-text {
+        font-size: 0.8rem; /* Giảm kích thước văn bản */
+    }
+
+    canvas {
+        max-width: 400px; /* Giới hạn chiều rộng của biểu đồ */
+        max-height: 180px; /* Giới hạn chiều cao của biểu đồ */
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="text-center text-primary font-weight-bold">Thống kê Doanh thu</h1>
+    <div class="text-right mb-3">
+        <a href="{% url 'export_doanh_thu_excel' %}" class="btn btn-success">
+            <i class="fas fa-file-excel"></i> Xuất Báo Cáo Doanh thu
+        </a>
+    </div>
+
+    <!-- Cards Tổng quan -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Doanh thu Ngày</h5>
+                    <p class="card-text display-6">
+                        {% if doanh_thu_ngay %}
+                            {{ doanh_thu_ngay|last|last|floatformat:2 }} VNĐ
+                        {% else %}
+                            0 VNĐ
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Doanh thu Tháng</h5>
+                    <p class="card-text display-6">
+                        {% if doanh_thu_thang %}
+                            {{ doanh_thu_thang|last|last|floatformat:2 }} VNĐ
+                        {% else %}
+                            0 VNĐ
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Doanh thu Năm</h5>
+                    <p class="card-text display-6">
+                        {% if doanh_thu_nam %}
+                            {{ doanh_thu_nam|last|last|floatformat:2 }} VNĐ
+                        {% else %}
+                            0 VNĐ
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Biểu đồ -->
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Biểu đồ Doanh thu theo Ngày</h4>
+            <canvas id="chartDoanhThuNgay"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>Biểu đồ Doanh thu theo Loại Sản phẩm</h4>
+            <canvas id="chartDoanhThuLoaiSP"></canvas>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h4>Biểu đồ Doanh thu theo Thương hiệu</h4>
+            <canvas id="chartDoanhThuThuongHieu"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>Biểu đồ Doanh thu theo Tháng</h4>
+            <canvas id="chartDoanhThuThang"></canvas>
+        </div>
+    </div>
+
+    <!-- Bảng Doanh thu theo Tháng -->
+    <div class="mt-5">
+        <h4>Bảng Doanh thu theo Tháng</h4>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Năm</th>
+                    <th>Tháng</th>
+                    <th>Doanh thu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nam, thang, doanh_thu in doanh_thu_thang %}
+                <tr>
+                    <td>{{ nam }}</td>
+                    <td>{{ thang }}</td>
+                    <td class="text-end">{{ doanh_thu|floatformat:2 }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">Không có dữ liệu</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Biểu đồ Doanh thu theo Ngày
+    const doanhThuNgayCtx = document.getElementById('chartDoanhThuNgay');
+    new Chart(doanhThuNgayCtx, {
+        type: 'line',
+        data: {
+            labels: [{% for ngay, _ in doanh_thu_ngay %}"{{ ngay }}",{% endfor %}],
+            datasets: [{
+                label: 'Doanh thu (Ngày)',
+                data: [{% for _, doanh_thu in doanh_thu_ngay %}{{ doanh_thu }},{% endfor %}],
+                borderColor: '#4e73df',
+                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                x: { title: { display: true, text: 'Ngày' } },
+                y: { title: { display: true, text: 'Doanh thu (VNĐ)' }, beginAtZero: true },
+            }
+        }
+    });
+
+    // Biểu đồ Doanh thu theo Loại Sản phẩm
+    const doanhThuLoaiSPCtx = document.getElementById('chartDoanhThuLoaiSP');
+    new Chart(doanhThuLoaiSPCtx, {
+        type: 'bar',
+        data: {
+            labels: [{% for loai, _ in doanh_thu_loai_sp %}"{{ loai }}",{% endfor %}],
+            datasets: [{
+                label: 'Doanh thu (Loại sản phẩm)',
+                data: [{% for _, doanh_thu in doanh_thu_loai_sp %}{{ doanh_thu }},{% endfor %}],
+                backgroundColor: 'rgba(28, 200, 138, 0.7)',
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Loại sản phẩm' } },
+                y: { title: { display: true, text: 'Doanh thu (VNĐ)' }, beginAtZero: true },
+            }
+        }
+    });
+
+    // Biểu đồ Doanh thu theo Thương hiệu
+    const doanhThuThuongHieuCtx = document.getElementById('chartDoanhThuThuongHieu');
+    new Chart(doanhThuThuongHieuCtx, {
+        type: 'line', // Thay đổi từ 'doughnut' sang 'line'
+        data: {
+            labels: [{% for thuong_hieu, _ in doanh_thu_thuong_hieu %}"{{ thuong_hieu }}",{% endfor %}],
+            datasets: [{
+                label: 'Doanh thu (Thương hiệu)',
+                data: [{% for _, doanh_thu in doanh_thu_thuong_hieu %}{{ doanh_thu }},{% endfor %}],
+                borderColor: '#FF6384',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                x: { title: { display: true, text: 'Thương hiệu' } },
+                y: { title: { display: true, text: 'Doanh thu (VNĐ)' }, beginAtZero: true },
+            }
+        }
+    });
+
+
+    // Biểu đồ Doanh thu theo Tháng
+    const doanhThuThangCtx = document.getElementById('chartDoanhThuThang');
+    new Chart(doanhThuThangCtx, {
+        type: 'line',
+        data: {
+            labels: [{% for nam, thang, _ in doanh_thu_thang %}"{{ nam }}-{{ thang }}",{% endfor %}],
+            datasets: [{
+                label: 'Doanh thu (Tháng)',
+                data: [{% for _, _, doanh_thu in doanh_thu_thang %}{{ doanh_thu }},{% endfor %}],
+                borderColor: '#4e73df',
+                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Tháng' } },
+                y: { title: { display: true, text: 'Doanh thu (VNĐ)' }, beginAtZero: true },
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "pages/layoutAd.html" %} {% block title %} Trang chủ admin {% endblock %} {% block content %} {% load static %}
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<h2 class="fw-bold text-black p-2">Quản lý thương hiệu</h2>
+
+<div class="row text-end my-3">
+    <div class="col-8">
+        <form action="/Admin/QL_SanPham/TrangChu" class="w-75 d-flex">
+            <input type="search" class="form-control m-auto" id="search" name="search" placeholder="Tìm kiếm theo tên thương hiệu" />
+            <button type="submit" class="btn btn-primary mx-2">Search</button>
+        </form>
+    </div>
+    <div class="col-4">
+        <a href="{% url 'add_brand' %}" class="btn btn-info">Thêm thương hiệu</a>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <tr class="table-dark">
+        <th>Mã thương hiệu</th>
+        <th>Tên thương hiệu</th>
+        <th>Tác vụ</th>
+    </tr>
+
+    {% for brand in listBrand %}
+    <tr>
+        <td>{{ brand.id }}</td>
+        <td>{{ brand.name }}</td>
+        <td>
+            <a class="btn btn-outline-info" href="/admin/edit_brand/{{ brand.id }}">Sửa</a>
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal{{ brand.id }}" data-brand-name="{{ brand.name }}" data-brand-id="{{ brand.id }}">Xóa</button>
+        </td>
+    </tr>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal{{ brand.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa thương hiệu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn xóa thương hiệu <span id="brandName{{ brand.id }}">{{ brand.name }}</span> không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <form method="POST" action="/delete_brand/{{ brand.id }}/">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Đồng ý</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</table>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $('#exampleModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var brandName = button.data('brand-name'); // Extract info from data-* attributes
+        var brandId = button.data('brand-id'); // Extract info from data-* attributes
+
+        var modal = $(this);
+        modal.find('#brandName' + brandId).text(brandName);
+    });
+</script>
+
+{% endblock %}

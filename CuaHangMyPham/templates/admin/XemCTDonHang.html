@@ -1,0 +1,66 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Danh sách chi tiết hóa đơn
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid mt-3">
+    <h2>Danh sách chi tiết hóa đơn</h2>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Mã hóa đơn</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cthd in listCTHD %}
+            <tr>
+                <td>{{ cthd.0 }}</td>
+                <td>{{ cthd.1 }}</td> 
+                <td>{{ cthd.2 }}</td>
+                <td>{{ cthd.3 }}</td>
+                <td>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- PHÂN TRANG -->
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <!-- Nút "Previous" -->
+                        <li class="page-item {% if listUser.number <= 1 %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/XemCTDonHang/?page={{ previous_page }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Hiển thị các nút số trang -->
+                        {% for i in page_range %}
+                            <li class="page-item {% if i == listUser.number %}active{% endif %}">
+                                <a class="page-link" href="/admin/XemCTDonHang/?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <!-- Nút "Next" -->
+                        <li class="page-item {% if listUser.number >= total_pages %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/XemCTDonHang/?page={{ next_page }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

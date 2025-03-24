@@ -1,0 +1,109 @@
+{% extends "pages/layoutAd.html" %} {% block title %} Trang chủ admin {% endblock %} {% block content %} {% load static %}
+<style>
+    .vertical-line {
+        width: 1px;
+        height: 100px;
+        background-color: black;
+    }
+</style>
+<div class="container-fluid">
+    <!-- <h1 class="h3 mb-2 text-gray-800">Chi tiết đơn hàng</h1> -->
+    <div class="text-end my-2">
+        <a href="{% url 'orders' %}" class="btn btn-success btn-icon-split" style="width: 200px;">
+            <span class="text">Danh sách đơn hàng</span>
+        </a>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết đơn hàng</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <span class="fs-6"><b>Mã đơn hàng:  {{order.id}}</b></span>
+                        <span class="fs-6 mx-5"><b>Ngày lập: {{order.order_date|date:"d/m/Y H:i:s"}} </b></span>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-end align-items-center">
+                            <span class="fs-6 mx-5"><b>Trạng thái: </b></span>
+                            <select name="status" class="form-select" aria-label="Default select example" style="width: 200px;">
+                                <option value="Chưa xác nhận" {% if order.status == "Chưa xác nhận" %}selected{% endif %}>Chưa xác nhận</option>
+                                <option value="Đã xác nhận" {% if order.status == "Đã xác nhận" %}selected{% endif %}>Đã xác nhận</option>
+                            </select>
+                            <button type="submit" class="btn btn-success btn-icon-split ms-3">
+                                <span class="text">Cập nhật trạng thái</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Giá trị sản phẩm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detail in order_details %}
+                        <tr>
+                            <td>{{detail.product.id}}</td>
+                            <td>{{detail.product.name}}</td>
+                            <td>{{detail.quantity}}</td>
+                            <td>{{detail.product.price}} VNĐ</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                <div>
+                    <span class="fs-6 float-end"><b>Tồng tiền:</b> {{order.total_amount}} VNĐ</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin đơn hàng</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="col-md-5">
+                        <h6 class="my-2 font-weight-bold text-primary">Thông tin người đặt</h6>
+                        <div>
+                            <span class="fs-6"><b>Mã khách hàng:  </b> {{order.user_id}}</span>
+                            <span class="fs-6 float-end"><b>Tên khách hàng:  </b>{{order.user.name}}</span>
+                        </div>
+                        <div>
+                            <span class="fs-6"><b>Email:  </b>{{order.user.email}}</span>
+                            <span class="fs-6 float-end"><b>Số điện thoại:  </b>{{order.user.phone}}</span>
+                        </div>
+                    </div>
+                    <div class="vertical-line"></div>
+                    <div class="col-md-5">
+                        <h6 class="my-2 font-weight-bold text-primary">Thông tin người nhận</h6>
+                        <div>
+                            <span class="fs-6"><b>Tên người nhận:  </b> {{order.recipient_name}}</span>
+                            <span class="fs-6 float-end"><b>Số điện thoại:  </b> {{order.recipient_phone}}</span>
+                        </div>
+                        <div class="fs-6"><b>Địa chỉ:  </b> {{order.recipient_address}}
+                        </div>
+                        <!-- <div class="fs-6"><b>note:  </b>
+                        </div> -->
+                        <div class="fs-6"><b>Phương thức thanh toán:  </b> {{order.method_payment}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

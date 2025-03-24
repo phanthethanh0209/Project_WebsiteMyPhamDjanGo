@@ -1,0 +1,60 @@
+{% extends "pages/layoutAd.html" %} 
+{% block title %} Trang chủ admin 
+{% endblock %} 
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h2 class="w-100 text-center text-danger">Chỉnh sửa thương hiệu</h2>
+        <form class="w-50" method="post">
+            {% csrf_token %}
+            
+            <!-- Hiển thị Tên thương hiệu -->
+            <div class="form-group">
+                <label for="id_ten_th">Tên thương hiệu</label>
+                <input name="TenTH" type="text" class="form-control" id="id_ten_th" value="{{ ThuongHieu.1 }}" required>
+            </div>
+            
+            <!-- Dropdown cho Nhà Cung Cấp -->
+            <div class="form-group">
+                <label for="id_maNCC">Tên nhà cung cấp</label>
+                <select name="MaNCC" class="form-control" id="id_maNCC" required>
+                    <option value="">Chọn nhà cung cấp</option>
+                    {% for ncc in nha_cung_caps %}
+                        <option value="{{ ncc.0 }}" {% if ncc.0 == LoaiSanPhan.2 %}selected{% endif %}>
+                            {{ ncc.1 }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Button trigger modal -->
+            <div class="text-center mt-2" style="display: flex; justify-content: center;">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Cập nhật</button>
+            </div>
+
+            <!-- Modal xác nhận -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật thương hiệu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có muốn cập nhật thông tin thương hiệu này không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Đồng ý</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

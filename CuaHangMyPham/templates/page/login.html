@@ -1,0 +1,44 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Đăng nhập
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div id="main">
+    <div id="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="background-color: lightblue; border-radius: 30px; padding: 30px">
+                    <h2 class="w-100 text-center p-3 text-danger"> Đăng nhập</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            <label for="id_email">Email</label>
+                            <input name="email" type="text" class="form-control" id="id_email" value="{{ form.email.value|default_if_none:'' }}">
+                            {% if form.email.errors %}
+                            <span class="text-danger">{{ form.email.errors }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password">Mật khẩu</label>
+                            <input name="password" type="password" class="form-control" id="id_password" value="{{ form.password.value|default_if_none:'' }}">
+                            {% if form.password.errors %}
+                            <span class="text-danger">{{ form.password.errors }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="text-center mt-2" style=" display: flex; justify-content: center;">
+                            <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                        </div>
+                    </form>              
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="container-fluid">
+    <h2 class="w-100 text-center p-3 text-danger"> CHI TIẾT 1 LOẠI</h2>
+    <div class="row">
+        <div class="col-8">
+            <p>Mã loại: {{category.id}}</p>
+            <p>Tên loại: {{category.name}}</p>            
+        </div>
+    </div>
+    
+</div>
+<br><br>
+
+
+{% endblock %}

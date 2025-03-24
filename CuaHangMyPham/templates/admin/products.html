@@ -1,0 +1,189 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    .custom-btn {
+        padding: 4px 8px;
+        font-size: 14px;
+        width: 120px;
+    }
+</style>
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<h2 class="fw-bold text-black p-2">Quản lý sản phẩm</h2>
+
+<div class="row text-end my-3">
+    <!--TÍNH NĂNG TÌM KIẾM SẢN PHẨM-->
+    <div class="col-4">
+
+        <form action="{% url 'products' %}" method="GET" class="w-75 d-flex">
+            <input type="search"
+                class="form-control m-auto"
+                id="search"
+                name="search"
+                value="{{ search_query }}"
+                placeholder="Tìm kiếm theo tên sản phẩm" />
+            <button type="submit" class="btn btn-primary custom-btn mx-2">Tìm kiếm</button>
+        </form> 
+    </div>
+    <div class="col-3">
+        <form id="sortForm" class="w-75 d-flex">
+            <select id="sortOption" class="form-select form-select-md" aria-label="Small select example">
+                <option value="" selected>Sắp xếp theo...</option>
+                <option value="name_asc">Tên A-Z</option>
+                <option value="name_desc">Tên Z-A</option>
+                <option value="price_asc">Giá tăng dần</option>
+                <option value="price_desc">Giá giảm dần</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-3">
+        <form id="categoryForm" class="w-75 d-flex" action="{% url 'products' %}" method="GET">
+            <select name="category" id="categorySelect" class="form-select form-select-md" aria-label="Small select example">
+                <option value="" selected>Tất cả loại sản phẩm</option>
+                {% for category in maloai %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    <div class="col-2">
+        <a href="/admin/add_product/" class="btn btn-info">Thêm sản phẩm</a>
+    </div>
+</div>
+
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã sản phẩm</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Ảnh bìa</th>
+                <th>Loại</th>
+                <th>Thương hiệu</th>
+                <th>Giá</th>
+                <th>Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in DM_SanPham %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>
+                    <img src="{% static 'img/' %}{{ product.image }}" alt="Hình ảnh sản phẩm" style="height: 100px;width: 100px;">
+                </td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.brand.name }}</td>
+                <td>{{ product.price }}</td>
+                <td class="text-center">
+                    <a class="btn btn-outline-primary" href="/admin/detail_product/{{ product.id }}">Xem chi tiết</a>
+                    <a class="btn btn-outline-warning" href="/admin/edit_product/{{product.id }}">Sửa</a>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal{{ product.id }}">
+                        Xóa
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmDeleteModal{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ product.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel{{ product.id }}">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn có chắc chắn muốn sản phẩm này không?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                    <form action="/admin/products/{{ product.id }}/delete" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+     <!-- PHÂN TRANG -->
+     <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <!-- Nút "Previous" -->
+                        <li class="page-item {% if DM_SanPham.number <= 1 %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/products/?page={{ previous_page }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Hiển thị các nút số trang -->
+                        {% for i in page_range %}
+                            <li class="page-item {% if i == DM_SanPham.number %}active{% endif %}">
+                                <a class="page-link" href="/admin/products/?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <!-- Nút "Next" -->
+                        <li class="page-item {% if DM_SanPham.number >= total_pages %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/products/?page={{ next_page }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+<!-- } -->
+
+<!--TÍNH NĂNG THÊM MỚI SP VÀO DATABASE-->
+<div class="text-center">
+    <!-- @Html.ActionLink("+ Thêm sản phẩm", "ThemSP", null, new { @class = "btn btn-success text-white text-decoration-none" }) -->
+    <a href="/admin/products">Trở về trang sản phẩm</a>
+</div>
+<script>
+    document.getElementById("sortOption").addEventListener("change", function() {
+        var selectedValue = this.value;
+        var url = "{% url 'products' %}" + "?sort=" + selectedValue;
+        window.location.href = url;
+    });
+</script>
+<script>
+    document.getElementById('categorySelect').addEventListener('change', function() {
+        document.getElementById('categoryForm').submit();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

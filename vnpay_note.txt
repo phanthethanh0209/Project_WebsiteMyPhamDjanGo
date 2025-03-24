@@ -1,0 +1,35 @@
+pip install requests
+pip install openpyxl
+
+Admin
+tk001
+Pass: Admin12345@
+
+User: 
+tk003
+password3
+tk005
+password5
+
+
+Thẻ test:
+Ngân hàng	NCB
+Số thẻ	9704198526191432198
+Tên chủ thẻ	NGUYEN VAN A
+Ngày phát hành	07/15
+Mật khẩu OTP	123456
+
+
+Thông tin truy cập Merchant Admin để quản lý giao dịch:
+Địa chỉ: https://sandbox.vnpayment.vn/merchantv2/
+
+Tên đăng nhập: phthanhvote.info@gmail.com
+
+Mật khẩu: Thanh123456@ (Là mật khẩu nhập tại giao diện đăng ký Merchant môi trường TEST)
+
+
+thanh toán vnpay,..
+	nếu trangthaigiaodich thành công -> update bảng hd với trangthai là đã thanh toán
+thanh toán tiền mặt
+	ko lưu vào bảng trangthaigiaodich
+	khi khách hàng thanh toán trực tiếp ở ngoài thì hd mới đc cập nhật đã thanh toán

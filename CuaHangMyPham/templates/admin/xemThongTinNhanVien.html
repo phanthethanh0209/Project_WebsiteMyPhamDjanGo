@@ -1,0 +1,27 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Thông tin chi tiết nhân viên
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <h2>Thông tin chi tiết nhân viên</h2>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Mã nhân viên:</strong> {{ MaNV }}</p>
+            <p><strong>Tên nhân viên:</strong> {{ TenNV }}</p>
+            <p><strong>Địa chỉ:</strong> {{ DiaChi }}</p>
+            <p><strong>Email:</strong> {{ Email }}</p>
+            <p><strong>SĐT:</strong> {{ SDT }}</p>
+            <p><strong>Chức vụ:</strong> {{ ChucVu }}</p>
+            <p><strong>Tên tài khoản:</strong> {{ TenTK }}</p>
+            <p><strong>Email tài khoản:</strong> {{ EmailTK }}</p>
+            <p><strong>Vai trò:</strong> {{ VaiTro }}</p>
+        </div>
+    </div>
+    <a class="btn btn-secondary mt-3" href="{% url 'danhSachNhanVien' %}">Quay lại</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,351 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Tin tức
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+
+
+<div id="content">
+    <div class="container-md container-fluid">
+        <div class="row">
+
+            <!-- News (blog làm đẹp) -->
+            <div class="col-lg-9 col-md-12">
+                <div class="home-news-headding">
+                    <h1 class="home-title-news">
+                        Tin Tức
+                    </h1>
+                </div>
+
+                <div class="home-news">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="blog-item" href="#">
+                                <div class="myblog">
+                                    <div title="Những mẫu nail đang khiến Gen Z phát cuồng Hè này, lưu ngay để chạy ra tiệm!" class="img-blog">
+                                        <a href="TrangTinTuc-content">
+                                            <img src="{% static 'img/tt1.png' %}" alt="">
+                                        </a>
+                                        <div class="label-date">
+                                            <div class="top-label">09</div>
+                                            <div class="bot-label">Tháng 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="content-blog">
+                                        <div class="top-content">
+                                            <a href="TrangTinTuc-content">
+                                                <h3>Những mẫu nail đang khiến Gen Z phát cuồng Hè này, lưu ngay để chạy ra tiệm!</h3>
+                                            </a>
+                                            <p>
+                                                <i class="fa-solid fa-user-tie "></i> <span>Đăng bởi: Trương Lê Bảo Trân</span>
+                                            </p>
+                                        </div>
+                                        <div class="bot-content">
+                                            <p>
+                                                HHT - Các mẫu nail thanh lịch như xám, nude, xanh oliu... đã chiếm sóng quá lâu rồi, giờ là lúc các mẫu nail rực rỡ trở lại. Có hai lý do hoàn hảo cho cuộc trở lại này, thứ nhất là trào lưu Y2K và thứ
+                                                hai là mùa Hè!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <div class="blog-item" href="#">
+                                <div class="myblog">
+                                    <div title="Ứng dụng ngay những kiểu tóc mới từ các fashion week, không sợ bí ý tưởng mỗi khi lên đồ" class="img-blog">
+                                        <a href="TrangTinTuc_content2">
+                                            <img src="{% static 'img/tt2.png' %}" alt="">
+                                        </a>
+                                        <div class="label-date">
+                                            <div class="top-label">03</div>
+                                            <div class="bot-label">Tháng 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="content-blog">
+                                        <div class="top-content">
+                                            <a href="TrangTinTuc_content2">
+                                                <h3>Ứng dụng ngay những kiểu tóc mới từ các fashion week, không sợ bí ý tưởng mỗi khi lên đồ</h3>
+                                            </a>
+                                            <p>
+                                                <i class="fa-solid fa-user-tie "></i> <span>Đăng bởi: Phan Trần Minh Tâm</span>
+                                            </p>
+                                        </div>
+                                        <div class="bot-content">
+                                            <p>
+                                                HHT - Trên sàn diễn hằng năm, ngoài những mốt thời trang thì các nhà tạo mẫu tóc tài ba nhất cũng sáng tạo ra những tạo hình tóc từ phức tạp đến đơn giản. Một vài trong số đó rất dễ ứng dụng và nhanh
+                                                chóng trở thành xu hướng.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="blog-item" href="#">
+                                <div class="myblog">
+                                    <div title="Emily in Paris 2 tiết lộ hành baro là bí quyết giảm cân của các cô gái Pháp, còn gì nữa?" class="img-blog">
+                                        <a href="TrangTinTuc_content3">
+                                            <img src="{% static 'img/tt3.png' %}" alt="">
+                                        </a>
+                                        <div class="label-date">
+                                            <div class="top-label">05</div>
+                                            <div class="bot-label">Tháng 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="content-blog">
+                                        <div class="top-content">
+                                            <a href="TrangTinTuc">
+                                                <h3>Emily in Paris 2 tiết lộ hành baro là bí quyết giảm cân của các cô gái Pháp, còn gì nữa?</h3>
+                                            </a>
+                                            <p>
+                                                <i class="fa-solid fa-user-tie "></i> <span>Đăng bởi: Phan Thế Thanh </span>
+                                            </p>
+                                        </div>
+                                        <div class="bot-content">
+                                            <p>
+                                                HHT - Đã có câu hỏi đặt ra là làm thế nào mà các nàng thơ Pháp luôn trông thon gọn dù họ rất thích tiệc tùng và thưởng thức các món ăn ngon, đặc biệt là bánh ngọt. Lý do thực sự khiến họ giữ được vóc
+                                                dáng mảnh mai là gì? Nghe nói họ có một số bí quyết để giữ dáng mà không cần cố gắng quá nhiều, ngược lại còn rất lành mạnh và dễ học theo.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <div class="blog-item" href="#">
+                                <div class="myblog">
+                                    <div title="Giới trẻ tranh thủ làm tóc, đầu tư bộ nail từ sớm để tránh tiệm bị quá tải ngày giáp Tết" class="img-blog">
+                                        <a href="TrangTinTuc_content">
+                                            <img src="{% static 'img/tt4.png' %}" alt="">
+                                        </a>
+                                        <div class="label-date">
+                                            <div class="top-label">07</div>
+                                            <div class="bot-label">Tháng 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="content-blog">
+                                        <div class="top-content">
+                                            <a href="TrangTinTuc_content">
+                                                <h3>Giới trẻ tranh thủ làm tóc, đầu tư bộ nail từ sớm để tránh tiệm bị quá tải ngày giáp Tết</h3>
+                                            </a>
+                                            <p>
+                                                <i class="fa-solid fa-user-tie "></i> <span>Đăng bởi: Nguyễn Minh Trí </span>
+                                            </p>
+                                        </div>
+                                        <div class="bot-content">
+                                            <p>HHT - Trước Tết tầm nửa tháng, nhiều bạn trẻ đã tranh thủ sắp xếp thời gian đến tiệm làm tóc để cập nhật “giao diện” thật xinh đẹp để đón năm mới.
+                                            <p>“Năm nay mình chỉ cắt, nhuộm đơn giản và mức giá tầm 900K. Kinh nghiệm của mình là sẽ không đưa hình mẫu vì dễ thất vọng khi ra thực tế. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="blog-item" href="#">
+                                <div class="myblog">
+                                    <div title="Làm sao để lúc nào cũng thơm phức? Có đến 8 bí quyết có thể giúp bạn đạt được điều đó!" class="img-blog">
+                                        <a href="TrangTinTuc_content">
+                                            <img src="{% static 'img/tt5.png' %}" alt="">
+                                        </a>
+                                        <div class="label-date">
+                                            <div class="top-label">02</div>
+                                            <div class="bot-label">Tháng 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="content-blog">
+                                        <div class="top-content">
+                                            <a href="TrangTinTuc_content">
+                                                <h3>Làm sao để lúc nào cũng thơm phức? Có đến 8 bí quyết có thể giúp bạn đạt được điều đó!</h3>
+                                            </a>
+                                            <p>
+                                                <i class="fa-solid fa-user-tie "></i> <span>Đăng bởi: Phan Trần Minh Tâm</span>
+                                            </p>
+                                        </div>
+                                        <div class="bot-content">
+                                            <p>HHT - Hẳn là bạn biết những cô nàng lúc nào trên người cũng có hương thơm, chỉ đi ngang qua trong trung tâm thương mại hay nhà hàng cũng có thể bị thu hút bởi mùi hương và sự quyến rũ tinh tế . </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <div class="blog-item" href="#">
+                                <div class="myblog">
+                                    <div title="'Sốt xình xịch' trào lưu khoe liệu pháp chăm sóc da từ nguyên liệu thiên nhiên của bạn trẻ" class="img-blog">
+                                        <a href="TrangTinTuc_content">
+                                            <img src="{% static 'img/tt6.png' %}" alt="">
+                                        </a>
+                                        <div class="label-date">
+                                            <div class="top-label">11</div>
+                                            <div class="bot-label">Tháng 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="content-blog">
+                                        <div class="top-content">
+                                            <a href="TrangTinTuc_content">
+                                                <h3>'Sốt xình xịch' trào lưu khoe liệu pháp chăm sóc da từ nguyên liệu thiên nhiên của bạn trẻ</h3>
+                                            </a>
+                                            <p>
+                                                <i class="fa-solid fa-user-tie "></i> <span>Đăng bởi: Phan Thế Thanh</span>
+                                            </p>
+                                        </div>
+                                        <div class="bot-content">
+                                            <p>SVVN - Gần đây, việc sử dụng các nguyên liệu tự nhiên để làm đẹp da trở thành một trào lưu được nhiều bạn trẻ lựa chọn. Nhờ điều này, các bạn đã có những thay đổi về ngoại hình lẫn quan niệm sống. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- News nổi bật -->
+            <div class="col-lg-3">
+                <div class="featured-products">
+                    <h2 class="title"><a href="#">Tin tức nổi bật</a></h2>
+                    <div class="list-product">
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content">
+                                    <img title="Hiểu đúng về những chất dưỡng da quen thuộc" src="{% static 'img/tt7.png' %}" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="Hiểu đúng về những chất dưỡng da quen thuộc"><a href="/TrangTinTuc_content">Hiểu đúng về những chất dưỡng da quen thuộc</a> </h3>
+                                <p class="product-item-sold">
+                                    20 lượt xem
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content8.html">
+                                    <img title="5 trào lưu làm đẹp kiểu Hàn khiến thế giới mỏi chân chạy theo" src="~/root/img/tt8.png" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="5 trào lưu làm đẹp kiểu Hàn khiến thế giới mỏi chân chạy theo"><a href="TrangTinTuc_content8">5 trào lưu làm đẹp kiểu Hàn khiến thế giới mỏi chân chạy theo</a> </h3>
+                                <p class="product-item-sold">
+                                    1220 lượt xem
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content9.html ">
+                                    <img title="17 công dụng tuyệt vời của nha đam trong chăm sóc sức khỏe và sắc đẹp" src="{% static 'img/tt11.png' %}" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="17 công dụng tuyệt vời của nha đam trong chăm sóc sức khỏe và sắc đẹp"><a href="/TrangTinTuc_content9">17 công dụng tuyệt vời của nha đam trong chăm sóc sức khỏe và sắc đẹp</a> </h3>
+                                <p class="product-item-sold">
+                                    768 lượt xem
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content10.html">
+                                    <img title="Cách giúp da mặt sáng mịn, hết mụn chỉ với 1 quả cam tươi" src="~/root/img/tt10.png" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="Cách giúp da mặt sáng mịn, hết mụn chỉ với 1 quả cam tươi"><a href="TrangTinTuc_content10">Cách giúp da mặt sáng mịn, hết mụn chỉ với 1 quả cam tươi</a> </h3>
+                                <p class="product-item-sold">
+                                    946 lượt xem
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content11.html">
+                                    <img title="Một thay đổi giúp người phụ nữ giảm 8kg trong 12 tuần" src="{% static 'img/tt13.png' %}" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="Một thay đổi giúp người phụ nữ giảm 8kg trong 12 tuần"><a href="TrangTinTuc_content11">Một thay đổi giúp người phụ nữ giảm 8kg trong 12 tuần</a> </h3>
+                                <p class="product-item-sold">
+                                    231 lượt xem
+                                </p>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content12.html">
+                                    <img title="Cách làm đẹp da bằng mật ong chỉ sau một đêm" src="{% static 'img/tt12.png' %}" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="Cách làm đẹp da bằng mật ong chỉ sau một đêm"><a href="TrangTinTuc_content">Cách làm đẹp da bằng mật ong chỉ sau một đêm</a> </h3>
+                                <p class="product-item-sold">
+                                    870 lượt xem
+                                </p>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="./TrangTinTuc_content13.html">
+                                    <img title="Làm đẹp da cực dễ dàng nếu nàng nắm được 3 bí kíp" src="{% static 'img/tt9.png' %}" alt="">
+                                </a>
+                            </div>
+                            <div class="product-shop">
+                                <h3 class="product-name" title="Làm đẹp da cực dễ dàng nếu nàng nắm được 3 bí kíp"><a href="TrangTinTuc_content">Làm đẹp da cực dễ dàng nếu nàng nắm được 3 bí kíp</a> </h3>
+                                <p class="product-item-sold">
+                                    591 lượt xem
+                                </p>
+                            </div>
+                        </div>
+                        <h3 class="title-audio">Video làm đẹp</h3>
+                        <div>
+                            <iframe width="100%" height="200%" src="https://www.youtube.com/embed/iU9qnvw2S6c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <h3 class="title-audio">Video làm da mặt</h3>
+                        <div>
+                            <iframe width="100%" height="200%" src="https://www.youtube.com/embed/3dMoxBE982s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <h3 class="title-audio">Trang điểm kiểu Hàn Quốc nhẹ nhàng đỉnh của chóp [辛欣烨].</h3>
+                        <div>
+                            <iframe width="100%" height="200%" src="https://www.youtube.com/embed/syJORDDJ26k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <h3 class="title-audio" style="font-size: 20px">Audio Nghe nhạc › Bài hát Flowers › Jisoo</h3>
+                        <div class="">
+                            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0bC7GKnxh9W9JIvJ6HVWxc?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
+                        <!-- @*<h3 class="title-audio">root/img/Nhac-Chuong-Flower-Jisoo.mp3</h3>*@ -->
+                        <div>
+                            <audio controls width="50%" height="300%">
+                                <source src="{% static 'img/Nhac-Chuong-Flower-Jisoo.mp3' %}" type="audio/ogg">
+                            </audio>
+                        </div>
+                        <!-- <h3 style="padding:10px;">Audio list nhạc K-pop</h3>
+                        <div><iframe scrolling="no" width="100%" height="300px" src=https://zingmp3.vn/embed/song/Z68DO099?start frameborder="0" allowfullscreen="true">
+                          </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

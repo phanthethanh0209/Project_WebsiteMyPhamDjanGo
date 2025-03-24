@@ -1,0 +1,144 @@
+{% extends "pages/layoutAd.html" %} {% block title %} Trang chủ admin {% endblock %} {% block content %} {% load static %} {% load humanize %}
+<style>
+    .custom-btn {
+        padding: 4px 8px;
+        font-size: 14px;
+        width: 120px;
+    }
+</style>
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<h2 class="fw-bold text-black p-2">Quản lý khuyến mãi</h2>
+
+<div class="row text-end my-3">
+    <!--TÍNH NĂNG TÌM KIẾM SẢN PHẨM-->
+    <!-- <div class="col-4">
+    </div> -->
+    <!-- <div class="col-3">
+        <form id="sortForm" class="w-75 d-flex">
+            <select id="sortOption" class="form-select form-select-md" aria-label="Small select example">
+                <option value="" selected>Sắp xếp theo...</option>
+                <option value="name_asc">Tên A-Z</option>
+                <option value="name_desc">Tên Z-A</option>
+                <option value="price_asc">Giá tăng dần</option>
+                <option value="price_desc">Giá giảm dần</option>
+            </select>
+        </form>
+    </div> -->
+    <div class="col text-right">
+        <a href="/admin/themKhuyenMai" class="btn btn-info">Thêm khuyến mãi</a>
+    </div>
+</div>
+
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Mã khuyến mãi</th>
+            <th>Tên khuyến mãi</th>
+            <th>Phần trăm giảm</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for k in listKM %}
+        <tr>
+            <td>{{ k.0 }}</td>
+            <td>{{ k.1 }}</td>
+            <td>{{ k.2 }} %</td>
+            <td class="text-center">
+                <a class="btn btn-outline-primary" href="/admin/CTKhuyenMai/{{ k.0 }}">Xem chi tiết</a>
+                <a class="btn btn-outline-warning" href="/admin/suaKhuyenMai/{{k.0 }}">Sửa</a>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal{{ k.0 }}">
+                        Xóa
+                    </button>
+                <!-- Modal -->
+                <div class="modal fade" id="confirmDeleteModal{{ k.0 }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ k.0 }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ k.0 }}">Xác nhận xóa</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có chắc chắn muốn xóa sản phẩm này không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                <form action="/admin/xoaKhuyenMai/{{ k.0 }}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Xóa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- PHÂN TRANG -->
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <!-- Nút "Previous" -->
+                    <li class="page-item {% if listKM.number <= 1 %} disabled {% endif %}">
+                        <a class="page-link" href="/admin/khuyenMai/?page={{ previous_page }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- Hiển thị các nút số trang -->
+                    {% for i in page_range %}
+                    <li class="page-item {% if i == listKM.number %}active{% endif %}">
+                        <a class="page-link" href="/admin/khuyenMai/?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endfor %}
+
+                    <!-- Nút "Next" -->
+                    <li class="page-item {% if listKM.number >= total_pages %} disabled {% endif %}">
+                        <a class="page-link" href="/admin/khuyenMai/?page={{ next_page }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- } -->
+
+<!--TÍNH NĂNG THÊM MỚI SP VÀO DATABASE-->
+
+<script>
+    document.getElementById('categorySelect').addEventListener('change', function() {
+        document.getElementById('categoryForm').submit();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

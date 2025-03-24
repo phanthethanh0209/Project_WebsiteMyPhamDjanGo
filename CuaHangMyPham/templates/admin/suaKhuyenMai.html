@@ -1,0 +1,102 @@
+{% extends "pages/layoutAd.html" %} {% block title %}Trang chủ admin{% endblock %} {% block content %} {% load static %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="w-100 text-center p-3 text-danger">Cập Nhật Khuyến Mãi</h2>
+            <form method="post" enctype="multipart/form-data" id="updateForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="MaKM">Mã khuyến mãi</label>
+                    <input name="MaKM" type="text" class="form-control" id="MaKM" value="{{ KhuyenMai.0 }}" readonly>
+                </div><br>
+                <div class="form-group">
+                    <label for="TenKM">Tên khuyến mãi</label>
+                    <input name="TenKM" type="text" class="form-control" id="TenKM" value="{{ KhuyenMai.1 }}" required>
+                </div><br>
+                <div class="form-group">
+                    <label for="PhanTramGiam">Phần trăm giảm</label>
+                    <input name="PhanTramGiam" type="number" class="form-control" id="PhanTramGiam" value="{{ KhuyenMai.2 }}" min="1" max="100" required>
+                </div><br>
+
+                <!-- Button trigger modal -->
+                <div class="text-center" style="display: flex; justify-content: center;">
+                    <button type="button" class="btn btn-primary" id="updateButton">Cập Nhật</button>
+                </div>
+
+                <!-- Modal xác nhận -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật khuyến mãi</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có muốn cập nhật khuyến mãi không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-danger">Đồng ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal lỗi -->
+                <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="errorModalLabel">Thông báo lỗi</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="errorModalBody">
+                                <!-- Nội dung lỗi sẽ được cập nhật bằng JavaScript -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <script>
+                // Lắng nghe sự kiện click nút "Cập Nhật"
+                document.getElementById("updateButton").addEventListener("click", function() {
+                    const tenKM = document.getElementById("TenKM").value.trim();
+                    const phanTramGiam = document.getElementById("PhanTramGiam").value;
+
+                    // Kiểm tra ràng buộc
+                    let errorMessage = "";
+                    if (!tenKM) {
+                        errorMessage = "Vui lòng nhập Tên khuyến mãi.";
+                    } else if (!phanTramGiam || phanTramGiam < 1 || phanTramGiam > 100) {
+                        errorMessage = "Phần trăm giảm phải nằm trong khoảng từ 1% đến 100%.";
+                    }
+
+                    if (errorMessage) {
+                        // Cập nhật nội dung modal lỗi
+                        document.getElementById("errorModalBody").innerText = errorMessage;
+
+                        // Hiển thị modal lỗi
+                        const errorModal = new bootstrap.Modal(document.getElementById("errorModal"));
+                        errorModal.show();
+                    } else {
+                        // Hiển thị modal xác nhận
+                        const confirmModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+                        confirmModal.show();
+                    }
+                });
+            </script>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Đăng ký
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+<div id="main">
+    <div id="content">
+        <div class="container">
+            @using (Html.BeginForm("DangKy", "Account", FormMethod.Post, new { @class = "custom_dangki" }))
+            {
+            <div class="container w-100 px-4 pe-4">
+                <div class="text-center pt-3">
+                    <h2 style="color: deepskyblue">ĐĂNG KÝ</h2>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(t => t.Username,"Tên đăng nhập")
+                    @Html.TextBoxFor(t => t.Username, new { placeholder = "Nhập tên đăng nhập", @class = "form-control" })
+                    @Html.ValidationMessageFor(t => t.Username)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(t => t.Email,"Email")
+                    @Html.TextBoxFor(t => t.Email, new { placeholder = "Ví dụ: email@email.com", @class = "form-control" })
+                    @Html.ValidationMessageFor(t => t.Email)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(t => t.Password,"Mật khẩu")
+                    @Html.PasswordFor(t => t.Password, new { placeholder = "Mật khẩu", @class = "form-control" })
+                    @Html.ValidationMessageFor(t => t.Password)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(t => t.ConfirmPassword,"Xác nhận mật khẩu")
+                    @Html.PasswordFor(t => t.ConfirmPassword, new { placeholder = "Xác nhận mật khẩu", @class = "form-control" })
+                    @Html.ValidationMessageFor(t => t.ConfirmPassword)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(t => t.Mobile,"Số điện thoại")
+                    @Html.TextBoxFor(t => t.Mobile, new { placeholder = "Ví dụ: 01234567890", @class = "form-control" })
+                    @Html.ValidationMessageFor(t => t.Mobile)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(t => t.NgaySinh,"Ngày sinh")
+                    @Html.TextBoxFor(t => t.NgaySinh, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(t => t.NgaySinh)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(t => t.DiaChi,"Địa chỉ")
+                    @Html.TextBoxFor(t => t.DiaChi, new { placeholder = "Nhập địa chỉ", @class = "form-control" })
+                    @Html.ValidationMessageFor(t => t.DiaChi)
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn mt-2" id="submit" style="background: linear-gradient(to right, #fff, #81c27e); ">DANG KY</button>
+                </div>
+            </div>
+                
+            }
+        </div> 
+     </div>
+</div>
+
+{% endblock %}

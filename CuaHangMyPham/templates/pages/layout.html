@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{% static 'img/logo-footer.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'themify-icons/fontawesome-free-6.4.0-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_TrangChu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_ChiTietSP.css' %}">
+    <link href="{% static 'css/style_LienHe.css' %}" rel="stylesheet" /> <!--GÂY LỖI-->
+    <link href="{% static 'css/style_TinTuc.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style_GioiThieu.css' %}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static 'css/style_SanPham.css' %}">
+    <link href="{% static 'PagedList.css' %}" rel="stylesheet" />
+
+    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.unobtrusive.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/tab_UI.js' %}"></script> <!--SHOP DETAIL-->
+    <link href="{% static 'css/style_ChiTietSP.css' %}" rel="stylesheet" />
+
+    <!-- <link href="{% static 'css/style_DangKi.css' %}" rel="stylesheet" /> -->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <title> {% block title %} {% endblock %} </title>
+    <style>
+
+        .formatted-price {
+                    color: #e74c3c; /* Màu đỏ sáng */
+                    font-weight: bold;
+                    font-size: 1.2em; /* Tăng kích thước chữ */
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+                    padding: 5px;
+                    border-radius: 4px;
+                    background-color: rgba(231, 76, 60, 0.1); /* Nền màu nhạt cho phần tử */
+                    display: inline-block; /* Để phần tử không chiếm toàn bộ chiều rộng */
+                    padding-left: 10px; /* Thêm khoảng cách ở phía trái */
+                    padding-right: 10px; /* Thêm khoảng cách ở phía phải */
+                    border: 1px solid #e74c3c; /* Viền màu đỏ để làm nổi bật */
+                }
+
+        .field-validation-error {
+            color: red;
+        }
+
+        .validation-summary-errors {
+            color: red;
+        }
+        .site-cart { float:right; position:relative; }
+
+        .site-header__cart-count { font-size:11px; display:inline-block; color:#fff; background-color:#000; border-radius:50%; text-align:center; width:14px; height:14px; line-height:14px; position:absolute; right:-5px; bottom:0; }
+    
+        /* Thêm CSS tùy chỉnh nếu cần thiết */
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Khoảng cách giữa các mục menu */
+        }
+
+        li ul.dropdown li a .anm { position:absolute; right:10px; top:10px; }
+        li.dropdown { position:relative; }
+        li .dropdown,
+         li .dropdown ul { list-style:none; border:1px solid #eeeeee; opacity:0; visibility:hidden; width:220px; position:absolute; top:59px; left:0; z-index:999; box-shadow:2px 2px 1px 0px rgba(0,0,0,0.3); -ms-transition:all 0.3s ease-in-out; -webkit-transition:all 0.3s ease-in-out; transition:all 0.3s ease-in-out; padding:0; }
+         li:hover > .dropdown,
+         li .dropdown li:hover > ul { top:40px; opacity:1; visibility:visible; }
+         li ul.dropdown li { border-top:1px solid #eeeeee; position:relative; }
+         li ul.dropdown li:first-child { border:0; }
+         li ul.dropdown li a { color:#000; font-weight:400; padding:8px 12px; background-color:#fff; }
+         li ul.dropdown li a:hover { color:#000; background-color:#eee; padding-left:17px; }
+         li ul.dropdown li ul { top:20px; left:100%; }
+         li ul.dropdown li:hover > ul { top:0; }
+
+
+         .navbar-nav .nav-link {
+            color: #ffffff !important; /* Thiết lập màu chữ là trắng */
+            font-weight: 400 !important; /* Thiết lập font-weight là 200 */
+        }
+    </style>
+</head>
+<body>
+
+    <!--Begin Header-->
+    <div id="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="header-top">
+                    <div class="header-container d-flex align-items-center">
+
+                        <label for="nav_mobile_input" class="menu-bar nav-mobile-button hidden-lg">
+                            <i class="fas fa-bars"></i>
+                        </label>
+
+                        <div>
+                            <img src="{% static 'root/img/logo_rvbg.jpg'%}" class="img-fluid w-50 m-auto my-3" alt="Alternate Text" />
+                        </div>
+
+                        <input type="checkbox" hidden name="" class="nav_input" id="nav_mobile_input">
+
+                        <label for="nav_mobile_input" class="nav_overlay"></label>
+                        <div class="sidebar_mobile">
+                            <div class="nav-user-login">
+                                <div class="icon-nav-user d-flex flex-column align-items-center ">
+                                    <div class="icon-nav"> <i class="fa-solid fa-user"></i></div>
+                                    <div>Chào mừng bạn đã đến</div>
+                                </div>
+                                <div class="button-login-signup d-flex align-items-center justify-content-between">
+                                    <a href="#"> ĐĂNG NHẬP</a>
+                                    <a href="#">ĐĂNG KÝ</a>
+                                </div>
+                            </div>
+
+                            <label for="nav_mobile_input" class="nav_mobile_close"><i class="fa-solid fa-xmark"></i></label>
+
+                            
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 hidden-sm">
+                            <div class=" input-search d-flex align-items-center ">
+                                <input type="text" placeholder="Tìm kiếm tên sản phẩm ..." size="70">
+                                <span class="input-search-btn d-flex align-items-center">
+                                    <button class="ti-search"></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                            <div class="icon d-flex align-items-center">
+                                <div class="user hidden-sm">
+                                    <a href="#" class="icon-user">
+                                        <img src="{% static 'img/icon_user.jpg'%}" alt="">
+                                    </a>
+
+    
+                                    <div class="account">
+                                        {% if request.session.tenTaiKhoan %}
+                                            <div class="signup">
+                                                <a href="/dangXuat">Đăng xuất</a>
+                                            </div>
+                                            <div class="signup bg-info">
+                                                <a href="/xemThongTinKhachHang">Xem thông tin</a>
+                                            </div>
+                                            <!-- Nếu tài khoản là admin -->
+                                            {% if request.session.vaiTro == "admin" %}
+                                                <div class="signup bg-secondary">
+                                                    <a href="/admin">Trang quản trị</a>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <!-- Nếu người dùng chưa đăng nhập -->
+                                            <div class="login">
+                                                <a href="/dangNhap">Đăng nhập</a>
+                                            </div>
+                                            <div class="signup">
+                                                <a href="/dangKyTaiKhoan">Đăng ký</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                       
+                                {% if request.session.tenTaiKhoan %}
+                                <!-- Nếu người dùng đã đăng nhập -->                                      
+                                <span class="text-danger fw-bold">Xin chào {{ request.session.tenTaiKhoan }}</span>
+                                {% endif %}
+
+                                 <div class="site-cart">
+                                    <a href="/cart" style="font-size: 25px;" title="Cart">  
+                                        <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                                        <img src="{% static 'img/bag.png' %}" width="50px">
+                                        <span id="CartCount" class="site-header__cart-count text-white fw-bold" data-cart-render="item_count">{{ cart_item_count }}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row hidden-sm hidden-md" style="background-color: #ED6F69; ">
+                <div class="container"> 
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <nav class="navbar navbar-expand-lg justify-content-center" style="background-color: #ED6F69; ">
+                                <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/">TRANG CHỦ</a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="/shop" >
+                                                SẢN PHẨM
+                                            </a>
+                                            <ul class="dropdown">
+                                                {% for category in categories %}
+                                                <li><a class="dropdown-item" href="/shop_theoloai/{{ category.0 }}">{{ category.1 }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                THƯƠNG HIỆU
+                                            </a>
+                                            <ul class="dropdown">
+                                                {% for brand in brands %}
+                                                <li><a class="dropdown-item" href="/shop_ThuongHieu/{{ brand.0 }}">{{ brand.1 }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row hidden-md-lg">
+                <div class=" input-search d-flex align-items-center p-3">
+                    <input type="text" placeholder="Tìm kiếm tên sản phẩm ..." size="100">
+                    <span class="input-search-btn d-flex align-items-center">
+                        <button class="ti-search"></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="~/root/js/logo.js"></script>
+    <!--End Header-->
+    <!--Content Body-->
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "118019591254404");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!--Foooter-->
+
+
+
+    <div id="footer">
+        <div class="container-fluid ">
+            <div class="row py-xl-4 py-md-2">
+                <div class="col-lg-4 col-md-3">
+                    <div class="slogan">
+                        <p class="p-0 m-0 fw-bold">MOON SHOP</p>
+                        <p>Vẻ đẹp của bạn, niềm tự hào của chúng tôi</p>
+                    </div>
+                    <div class="address">
+                        <ul class="px-0">
+                            <li>Địa chỉ: Moon Shop, 167 Nam Kỳ Khởi Nghĩa, Quận 1, TP. Hồ Chí Minh </li>
+                            <li>Hotline: 1900 8198</li>
+                            <li>Giờ làm việc: 8AM - 5PM (Thứ 2- Thứ 6, trừ các ngày lễ, tết)</li>
+                            <li>Email: contact@moonshop.com.vn</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 pt-md-4">
+                    <h4 class="menu">
+                        <a class="title-menu" href="#">Danh mục</a>
+                    </h4>
+                    <hr class="border-2 p-0 m-0 w-50" />
+                    <div class="list-menu">
+                        <ul class="px-0">
+                            <li><a href="#">Home</a> </li>
+                            <li><a href="#">Đồng giá 99k</a></li>
+                            <li><a href="#">New</a> </li>
+                            <li><a href="#">Bán chạy</a> </li>
+                            <li><a href="#">Chăm sóc da</a> </li>
+                            <li><a href="#">Trang điểm</a> </li>
+                            <li><a href="#">Thương hiệu</a> </li>
+                            <li><a href="#">Tạp chí làm đẹp</a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 pt-md-4">
+                    <h4 class="menu">
+                        <a class="title-menu" href="#">Hỗ trợ khách hàng</a>
+                    </h4>
+                    <hr class="border-2 p-0 m-0 w-50" />
+                    <div class="list-menu">
+                        <ul class="px-0">
+                            <li><a href="#">Hướng dẫn mua hàng</a> </li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Chính sách đổi trả sản phẩm</a></li>
+                            <li><a href="#">Phương thức thanh toán</a> </li>
+                            <li><a href="#">Phương thức vận chuyển</a> </li>
+                            <li><a href="#">Các câu hỏi thường gặp</a></li>
+                            <li><a href="#">Tạp chí Beauty Secret</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 pt-md-4">
+                    <div class=" social-footer ">
+                        <h4 class="menu ">
+                            <a class="title-menu " href="# ">Kết nối với chúng tôi</a>
+                        </h4>
+                        <hr class="border-2 pb-1 m-0 w-50" />
+                        <ul class="follow-option ">
+                            <li><a href="# "><i class="ti-facebook icon-footer "></i></a></li>
+                            <li><a href="# "><i class="ti-instagram icon-footer "></i></a></li>
+                            <li><a href="# "><i class="ti-twitter-alt icon-footer "></i></a></li>
+                            <li><a href="# "><i class="ti-google icon-footer "></i></a></li>
+                            <li><a href="# "><i class="ti-youtube icon-footer "></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="mail-footer ">
+                        <div class="pay ">
+                            <h4 class="menu ">
+                                <a class="title-menu " href="# ">phương thức thanh toán</a>
+                            </h4>
+                            <div class="Paypal ">
+                                <a href="# "><img src="{% static 'img/i_payment.png' %} " alt=""></a>
+                                <img class="img-fluid w-75 mx-4" src="{% static 'img/logoBoCongThuong.png' %}" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Phone ring-->
+            <div class="hotline-phone-ring-wrap">
+                <div class="hotline-phone-ring">
+                    <div class="hotline-phone-ring-circle"></div>
+                    <div class="hotline-phone-ring-circle-fill"></div>
+                    <div class="hotline-phone-ring-img-circle">
+                        <a href="tel:0988488263" class="pps-btn-img">
+                            <img src="https://isharevn.net/wp-content/uploads/2021/05/icon-call-nh.png" alt="Gọi điện thoại" width="50">
+                        </a>
+                    </div>
+                </div>
+                <div class="hotline-bar">
+                    <a href="tel:0985092837">
+                        <span class="text-hotline">1900 8198</span>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="container-fluid text-center">
+                <h6 class="p-3 m-0">Moon Shop 2024. &#169; Design by <span style="color: #6fcefc" class="fw-bolder">NHÓM 8</span>. All Rights Reserved.</h6>
+            </div>
+
+        </div>
+    </div>
+    <a class="gotobtn " href="#header "><i class="ti-arrow-up "></i></a>
+    <script src="~/bootstrap_admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/bootstrap_admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/bootstrap_admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/bootstrap_admin/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/bootstrap_admin/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/bootstrap_adminjs/demo/chart-area-demo.js"></script>
+    <script src="~/bootstrap_admin/js/demo/chart-pie-demo.js"></script>
+    <script src="~/root/js/form_login2.js"></script>
+    <!-- js hiện form lên giữa màn hình -->
+    <script src="~/root/js/form_login.js "></script>
+    <script src="~/root/js/changeImage.js "></script>
+
+
+    <!-- <script src="./root/js/show_menuchild_mobile.js"></script> -->
+    <!-- @RenderSection("jsFooter", required: false) -->
+</body>
+</html>

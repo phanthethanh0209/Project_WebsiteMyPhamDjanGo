@@ -1,0 +1,130 @@
+{% extends "pages/layout.html" %}
+
+{% block title %}Giỏ hàng{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Body Content -->
+<br>
+<form action="#" method="post" style="width: auto;">
+    <section class="h-100" style="background-color: white">
+        <div class="container h-100 py-3">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-normal mb-0 text-black">Giỏ hàng</h3>
+                        <div>
+                            {% if cart_details %}
+                            <div class="row d-flex align-items-center">
+                                <div class="col-auto">
+                                    <span class="formatted-price">Tổng tiền: <span id="formatted-price">{{ total_price }}</span> VNĐ</span>
+                                </div>                                                                                                                                          
+                                <div class="col-auto">
+                                    <a href="{% url 'clearCart' %}" class="btn--link cart-continue"><i class="fa-solid fa-xmark"></i> Xóa tất cả</a>
+                                </div>                                    
+                            </div>
+                            {% else %}
+                                <div>0 VNĐ</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card rounded-3 mb-4">
+                        <div class="card-body p-2" style="background-color: lightpink;">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2"></div>
+                                <div class="col-md-4 col-lg-4 col-xl-4"><b>Sản phẩm</b></div>
+                                <div class="col-md-2 col-lg-2 col-xl-2 d-flex"><b>Số lượng</b></div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 "><b>Giá</b></div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if cart_details %}
+                        {% for item in cart_details %}
+                            <div class="card rounded-3 mb-4">
+                                <div class="card-body p-4">
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="{% static 'img/' %}{{ item.HinhAnh }}" class="img-fluid rounded-3" alt="{{ item.TenSP }}">
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-xl-4">
+                                            <p style="font-size: 18px;" class="lead fw-normal mb-2">{{ item.TenSP }}</p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2 col-xl-1 d-flex">
+                                            <a href="{% url 'decrease_quantity' product_id=item.MaSP %}" class="btn btn-link px-2">
+                                                <i class="fas fa-minus"></i>
+                                            </a>  
+                                            <div style="border: 1px solid #ccc; border-radius: 5px; padding: 5px 10px;">{{ item.SoLuongTrongGioHang }}</div>
+                                            <a href="{% url 'increase_quantity' product_id=item.MaSP %}" class="btn btn-link px-2">
+                                                <i class="fas fa-plus"></i>
+                                            </a>                                            
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                            <h6 class="mb-0"><span class="price">{{ item.ItemTotal|floatformat:0 }}</span> VNĐ</h6>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <a href="{% url 'deleteOnePro' product_id=item.MaSP %}" class="text-danger">
+                                                <i class="fas fa-trash fa-lg"></i>
+                                            </a>
+                                        </div>                                      
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="card">
+                           
+                        </div>
+                    {% else %}
+                        <div>Chưa có sản phẩm nào trong giỏ hàng</div>
+                    {% endif %}
+
+
+                    <div class="container mt-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{% url 'index' %}" class="btn btn-primary" style="background-color: #ffb6c1; border: none;">Tiếp tục mua hàng</a>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <a href="{% url 'checkout' %}" class="btn btn-primary" style="background-color: #ed6f69; border: none;">Thanh toán</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+
+<script>
+    // Lấy giá trị total_price từ template
+    var totalPrice = "{{ total_price }}";
+
+    // Định dạng số tiền với dấu phẩy phân cách
+    var formattedPrice = totalPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // Cập nhật giá trị hiển thị
+    document.getElementById("formatted-price").innerText = formattedPrice;
+</script>
+<script>
+    // Lấy tất cả các phần tử có class 'price' (hoặc bạn có thể thay đổi selector nếu cần)
+    var priceElements = document.querySelectorAll('.price');
+
+    // Duyệt qua tất cả các phần tử và áp dụng định dạng
+    priceElements.forEach(function(element) {
+        var price = element.innerText.trim();
+
+        // Định dạng số tiền với dấu phẩy phân cách
+        var formattedPrice = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // Cập nhật lại giá trị hiển thị
+        element.innerText = formattedPrice;
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="background-color: lightblue; border-radius: 30px; padding: 30px">
+            <h2 class="w-100 text-center p-3 text-danger"> CHỈNH SỬA 1 LOẠI MỚI</h2>
+            <form method="post">
+                {% csrf_token %}
+               
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Tên loại</label>
+                    <input type="text" name="{{ form.name.name }}" class="form-control" id="{{ form.name.id_for_label }}" value="{{ form.name.value }}">
+                    {% if form.name.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.name.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+
+                <!-- Button trigger modal -->
+                <div class="text-center" style=" display: flex; justify-content: center; ">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Sửa</button>
+                </div>
+    
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xác nhận sửa loại</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có muốn sửa loại không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Đồng ý</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+                
+            
+                    
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

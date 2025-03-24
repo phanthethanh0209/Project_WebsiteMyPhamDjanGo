@@ -1,0 +1,78 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Lịch sử đơn hàng
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid mt-3">
+    <h2>Danh sách lịch sử đơn hàng</h2>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Mã hóa đơn</th>
+                <th scope="col">Ngày lập</th>
+                <th scope="col">Tên tài khoản</th>
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Phương thức thanh toán</th>
+                <th scope="col">Địa chỉ giao hàng</th>
+                <th scope="col">Tên khách hàng</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lshd in listLSHD %}
+            <tr>
+                <td>{{ lshd.0 }}</td>
+                <td>{{ lshd.1|date:"d/m/Y h:i a" }}</td>
+                <td>{{ lshd.2 }}</td> 
+                <td>{{ lshd.3 }}</td> 
+                <td>{{ lshd.4 }}</td> 
+                <td>{{ lshd.5 }}</td> 
+                <td>{{ lshd.6 }}</td> 
+                <td>{{ lshd.7 }}</td> 
+                <td>{{ lshd.8 }}</td> 
+                <td>
+                    <a class="btn btn-secondary btn-sm" href="{% url 'XemCTDonHang' lshd.0 %}">Xem</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- PHÂN TRANG -->
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <!-- Nút "Previous" -->
+                        <li class="page-item {% if listUser.number <= 1 %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/LichSuDonHang/?page={{ previous_page }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Hiển thị các nút số trang -->
+                        {% for i in page_range %}
+                            <li class="page-item {% if i == listUser.number %}active{% endif %}">
+                                <a class="page-link" href="/admin/LichSuDonHang/?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <!-- Nút "Next" -->
+                        <li class="page-item {% if listUser.number >= total_pages %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/LichSuDonHang/?page={{ next_page }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

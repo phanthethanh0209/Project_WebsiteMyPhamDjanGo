@@ -1,0 +1,75 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="background-color: lightblue; border-radius: 30px; padding: 30px">
+            <h2 class="w-100 text-center p-3 text-danger"> THÊM 1 LOẠI MỚI</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <!-- {{form.as_p}} -->
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tên loại</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputEmail1" value="">
+                    <span class="text-danger">{{ form.name.errors }}</span>
+                </div><br>
+
+                <!-- Button trigger modal -->
+                <div class="text-center" style=" display: flex; justify-content: center; ">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thêm</button>
+                </div>
+    
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xác nhận thêm sản phẩm</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có muốn thêm sản phẩm không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Đồng ý</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+                
+            
+                    
+        </div>
+    </div>
+</div>
+
+<!-- <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="background-color: lightblue; border-radius: 30px; ">
+            <h2 class="w-100 text-center p-3 text-danger"> THÊM 1 LOẠI MỚI</h2>
+            <form method="post" style="margin: 20px;">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Thêm loại" />
+                <br>
+                
+            </form>          
+            
+            
+        </div>
+    </div>
+</div> -->
+
+
+{% endblock %}

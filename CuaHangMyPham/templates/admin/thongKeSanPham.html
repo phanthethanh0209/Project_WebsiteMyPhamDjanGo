@@ -1,0 +1,61 @@
+{% extends "pages/layoutAd.html" %}
+
+{% block title %} Thống kê Sản phẩm {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary font-weight-bold">Thống kê Sản phẩm</h1>
+    <div class="text-right mb-3">
+        <a href="{% url 'export_san_pham_excel' %}" class="btn btn-success">
+            <i class="fas fa-file-excel"></i> Xuất Báo Cáo Sản phẩm
+        </a>
+    </div>
+
+    <!-- Biểu đồ Sản phẩm -->
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Biểu đồ Sản phẩm Bán chạy</h4>
+            <canvas id="chartSanPhamBanChay"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>Bảng Sản phẩm Tồn kho</h4>
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng tồn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sp, so_luong_ton in sp_ton_kho %}
+                    <tr>
+                        <td>{{ sp }}</td>
+                        <td>{{ so_luong_ton }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">Không có dữ liệu</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Biểu đồ Sản phẩm bán chạy
+    const spBanChayCtx = document.getElementById('chartSanPhamBanChay');
+    new Chart(spBanChayCtx, {
+        type: 'pie',
+        data: {
+            labels: [{% for sp, _ in sp_ban_chay %}"{{ sp }}",{% endfor %}],
+            datasets: [{
+                data: [{% for _, so_luong in sp_ban_chay %}{{ so_luong }},{% endfor %}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            }]
+        },
+    });
+</script>
+{% endblock %}

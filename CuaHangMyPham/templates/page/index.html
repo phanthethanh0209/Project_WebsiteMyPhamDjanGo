@@ -1,0 +1,209 @@
+{% extends "pages/layout.html" %}
+
+{% block title %}
+    Trang chủ
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div id="main">
+    <!-- Slider -->
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img style="width: 100%; height: 400px;" src="{% static 'img/slider1.jpg' %}" class="d-block" alt="Slider 1">
+            </div>
+            <!-- Các carousel-item khác -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Content Section -->
+    <div id="content" style="background-color:#fff">
+        <div class="container-lg">
+            <div class="row py-5 container-row">
+                <div class="col-md-6 col-sm-6">
+                    <a href="#"><img title="Big Sale" src="{% static 'img/banner_2.png' %}" alt="Big Sale"></a>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <a href="#"><img title="Big Sale" src="{% static 'img/banner_3.png' %}" alt="Big Sale"></a>
+                </div>
+            </div>
+
+            <div class="row container-row">
+                <div class="text">
+                    <h2 class="line"><a href="#">Sản phẩm mới</a></h2>
+                    <div class="list-item">
+                        {% for product in topProNew %}
+                        <div class="grid_column-2-4">
+                            <div class="home-product-item">                                
+                                <div class="product-img">
+                                    <a href="/shop_detail/{{ product.0 }}"><img src="{% static 'img/' %}{{ product.2 }}" alt="{{ product.1 }}" style="width: 220px; height: 220px;"></a>
+                                </div>
+                                <h4 class="product-item-name">
+                                    <a href="{% url 'shop_detail' product.0 %}">{{ product.1 }}</a>
+                                </h4>
+                                <div class="product-item-price">
+                                    {% if product.7 == 0 %}
+                                    <span class="price-current">{{ product.3|floatformat:0 }} </span>
+                                    <span class="vnd">₫</span>
+                                    {% else %}
+                                    <span class="price-current">{{ product.8|floatformat:0 }}</span>
+                                    <span class="vnd">₫</span>
+                                    <span class="price-old">{{ product.3|floatformat:0 }} ₫</span>
+                                    {% endif %}
+                                </div>
+                                <div class="product-item-action">
+                                    <div> </div>
+                                    <div class="rating-star d-flex align-items-center">
+                                        {% if product.5 == 1 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 2 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 3 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 4 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 5 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        {% else %}
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <a class="product-item-btn-addcart" href="/addCart/?action=addcart&id_product={{ product.0 }}">Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="blog">
+                <div class="blog-content">
+                    <div class="row">
+                        <div class="col-blog">
+                            <div class="heading-blog">
+                                <h2><a href="">Blog làm đẹp</a></h2>
+                            </div>
+                            <div class="list-blog d-flex align-items-center2">
+                                <div class="item-blog">
+                                    <div class="blog-img">
+                                        <a href="#"><img title="Tẩy trang 101: Tất cả những gì bạn cần biết về tẩy trang" src="{% static 'img/blog1.png' %}" alt=""></a>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h3 class="title-blog">
+                                            <a href="#">Tẩy trang 101: Tất cả những gì bạn cần biết về tẩy trang.</a>
+                                        </h3>
+                                        <div class="post-time">
+                                            <span>
+                                                Đăng bởi
+                                                <b>Thế Thanh</b>
+                                                -20/11/2023
+                                            </span>
+                                        </div>
+                                        <p class="text-blog">
+                                            Tài liệu tổng hợp đầy đủ nhất về tẩy trang. Hướng dẫn sử dụng tẩy trang đúng cách và hiệu quả...
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="item-blog">
+                                    <div class="blog-img">
+                                        <a href="#"><img title="123 Skincare đơn giản nhưng phù hợp cho mọi loại da" src="{% static 'img/blog2.png' %}" alt=""></a>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h3 class="title-blog">
+                                            <a href="#">123 Skincare đơn giản nhưng phù hợp cho mọi loại da.</a>
+                                        </h3>
+                                        <div class="post-time">
+                                            <span>
+                                                Đăng bởi
+                                                <b>Minh Trí</b>
+                                                -20/11/2023
+                                            </span>
+                                        </div>
+                                        <p class="text-blog">
+                                            123 Skincare là một quy trình skincare vô cùng đơn giản, chỉ với 3 bước thực hiện, nhưng cực kỳ hiệu quả...
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="item-blog">
+                                    <div class="blog-img">
+                                        <a href="#"><img title="Hướng dẫn các bước skincare cho da mụn" src="{% static 'img/blog3.png' %}" alt=""></a>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h3 class="title-blog">
+                                            <a href="#">Hướng dẫn các bước skincare cho da mụn.</a>
+                                        </h3>
+                                        <div class="post-time">
+                                            <span>
+                                                Đăng bởi
+                                                <b>Bảo Trân</b>
+                                                -20/11/2023
+                                            </span>
+                                        </div>
+                                        <p class="text-blog">
+                                            Các bước skincare cho da mụn này là các bước mà Oanh đã áp dụng để điều trị mụn và chăm sóc làn da của mình...
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="item-blog">
+                                    <div class="blog-img">
+                                        <a href="#"><img title="Tất cả những gì bạn cần biết về kem chống nắng" src="{% static 'img/blog4.png' %}" alt=""></a>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h3 class="title-blog">
+                                            <a href="#">Tất cả những gì bạn cần biết về kem chống nắng.</a>
+                                        </h3>
+                                        <div class="post-time">
+                                            <span>
+                                                Đăng bởi
+                                                <b>Minh Tâm</b>
+                                                -20/11/2023
+                                            </span>
+                                        </div>
+                                        <p class="text-blog">
+                                            Tài liệu tổng hợp đầy đủ nhất về kem chống nắng. Hướng dẫn sử dụng kem chống nắng đúng cách và hiệu quả...
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+{% endblock %}

@@ -1,0 +1,159 @@
+
+{% extends "pages/layout.html" %} {% block title %} Thông tin khách hàng {% endblock %} 
+{% block content %} 
+{% load static %}
+
+<!-- Bootstrap CSS -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- Bootstrap JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="card mb-4" style="background-color: #F8DBCD">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="orderTabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" id="processed-tab" data-bs-toggle="tab" data-bs-target="#processed" type="button" role="tab" aria-controls="processed" aria-selected="true">
+                                Đơn hàng đã xử lý
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="unprocessed-tab" data-bs-toggle="tab" data-bs-target="#unprocessed" type="button" role="tab" aria-controls="unprocessed" aria-selected="false">
+                                Đơn hàng chưa xử lý
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-4" id="orderTabsContent">
+                        <!-- Tab: Đơn hàng đã xử lý -->
+                        <div class="tab-pane fade show active" id="processed" role="tabpanel" aria-labelledby="processed-tab">
+                            {% for hd in DSHoaDon %}
+                            <div class="card mb-3 mx-5" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); ">
+                                <div class="card-body">
+                                    <h4>Đơn hàng {{ hd.0 }}</h4>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-9">Ngày: {{ hd.1|date:"d-m-Y" }}  </div>                                                                                
+                                        <div class="col-sm-3"> <b>Tổng tiền: {{ hd.2 }} VNĐ</b> </div>
+                                       
+                                    </div>
+
+                                    {% for sp in DSCTHoaDon %}
+                                    {% if sp.0 == hd.0 %}
+                                    <hr>
+                                    <div class="row mx-5">
+                                        <div class="col-sm-3">
+                                            <img src="{% static 'img/' %}{{ sp.3 }}" alt="{{ sp.2 }}" style="width: 80px; height: 80px;">
+                                            <!-- <p class="mb-0">Họ tên: </p> -->
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <h5 class="text-muted mb-0"> {{ sp.2 }}</h5>
+                                            <p class="text-muted mb-0">x {{ sp.6 }}</p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p class="text-muted mb-0"> {{ sp.5 }} VNĐ</p>
+                                        </div>
+                                        <div class="col-sm-2 ">
+                                            {% for ktra in KtraDG %}
+                                                {% if hd.0 == ktra.MaHD and sp.1 == ktra.MaSP and ktra.Eligible is True %}                                        
+                                                    <a class="btn btn-outline-primary" href="/shop_detail/{{ sp.1 }}">Đánh giá</a>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    
+                                    <hr>
+                                   
+                                    
+                                    <div class="order-details mt-3" id="details-processed-001">
+                                        <div class="row mx-5">
+                                            <div class="col-sm-6">
+                                                <p class="text-muted mb-0"><b> Tên người nhận:</b> {{ hd.6 }}</p>
+                                                <p class="text-muted mb-0"><b>Số điện thoại:</b>   {{ hd.7 }}</p>
+                                                <p class="text-muted mb-0"> <b>Phương thức thanh toán:</b>  {{ hd.4 }}</p>
+                                            </div>
+                                            <div class="col-sm-6">                                                
+                                                <p class="text-muted mb-0"> <b>Địa chỉ giao hàng: </b> {{ hd.8 }}</p>
+                                            </div>             
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Tab: Đơn hàng chưa xử lý -->
+                        <div class="tab-pane fade" id="unprocessed" role="tabpanel" aria-labelledby="unprocessed-tab">
+                            {% for hd in DSHoaDon1 %}
+                            <div class="card mb-3 mx-5" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+                                <div class="card-body">
+                                    
+                                    <h4>Đơn hàng {{ hd.0 }}</h4>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-10">Ngày: {{ hd.1|date:"d-m-Y" }}  </div>                                                                                
+                                        <div class="col-sm-2"> <b>Tổng tiền: {{ hd.2 }}</b> </div>
+                                       
+                                    </div>
+
+                                    {% for sp in DSCTHoaDon1 %}
+                                    {% if sp.0 == hd.0 %}
+                                    <hr>
+                                    <div class="row mx-5">
+                                        <div class="col-sm-3">
+                                            <img src="{% static 'img/' %}{{ sp.3 }}" alt="{{ sp.2 }}" style="width: 80px; height: 80px;">
+                                            <!-- <p class="mb-0">Họ tên: </p> -->
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p class="text-muted mb-0"> {{ sp.2 }}</p>
+                                            <p class="text-muted mb-0">x {{ sp.6 }}</p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p class="text-muted mb-0"> {{ sp.5 }}</p>
+                                        </div>
+                                        <div class="col-sm-2 ">
+                                            {% for ktra in KtraDG1 %}
+                                            {% if hd.0 == ktra.MaHD and sp.1 == ktra.MaSP and ktra.Eligible is True %}                                        
+                                                <a class="btn btn-outline-primary" href="/shop_detail/{{ sp.1 }}">Đánh giá</a>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    
+                                    <hr>
+                                   
+                                    
+                                    <div class="order-details mt-3" id="details-processed-001">
+                                        <div class="row mx-5">
+                                            <div class="col-sm-6">
+                                                <p class="text-muted mb-0"><b> Tên người nhận:</b> {{ hd.6 }}</p>
+                                                <p class="text-muted mb-0"><b>Số điện thoại:</b>   {{ hd.7 }}</p>
+                                                <p class="text-muted mb-0"> <b>Phương thức thanh toán:</b>  {{ hd.4 }}</p>
+                                            </div>
+                                            <div class="col-sm-6">                                                
+                                                <p class="text-muted mb-0"> <b>Địa chỉ giao hàng: </b> {{ hd.8 }}</p>
+                                            </div>             
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}

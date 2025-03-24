@@ -1,0 +1,99 @@
+{% extends "pages/layoutAd.html" %} 
+{% block title %} Trang chủ admin {% endblock %} 
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h2 class="w-100 text-center text-danger">Chỉnh sửa thương hiệu</h2>
+        <form class="w-50" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_ten_sp">Tên sản phẩm</label>
+                <input name="TenSP" type="text" class="form-control" id="id_ten_sp" value="{{ SanPham.1 }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_hinh_anh">Hình ảnh</label>
+                <input name="HinhAnh" type="file" class="form-control-file" id="id_hinh_anh">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_ngay_sx">Ngày sản xuất</label>
+                <input name="NSX" type="date" class="form-control" id="id_ngay_sx" value="{{ SanPham.3 }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_han_sd">Hạn sử dụng</label>
+                <input name="HSD" type="date" class="form-control" id="id_han_sd" value="{{ SanPham.4 }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_mo_ta">Mô tả</label>
+                <textarea name="MoTa" class="form-control" id="id_mo_ta">{{ SanPham.5 }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_gia_ban">Giá bán</label>
+                <input name="GiaBan" type="number" step="0.01" class="form-control" id="id_gia_ban" value="{{ SanPham.6 }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_so_luong_ton">Số lượng tồn</label>
+                <input name="SoLuongTon" type="number" class="form-control" id="id_so_luong_ton" value="{{ SanPham.7 }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_trong_luong">Trọng lượng</label>
+                <input name="TrongLuong" type="number" step="0.01" class="form-control" id="id_trong_luong" value="{{ SanPham.8 }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_ma_loai">Tên loại</label>
+                <select name="MaLoai" class="form-control" id="id_ma_loai" required>
+                    <option value="">Chọn loại</option>
+                    {% for loaisp in loai_sps %}
+                        <option value="{{ loaisp.0 }}" {% if SanPham.9 == loaisp.0 %}selected{% endif %}>{{ loaisp.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_ma_th">Tên thương hiệu</label>
+                <select name="MaTH" class="form-control" id="id_ma_th" required>
+                    <option value="">Chọn thương hiệu</option>
+                    {% for th in thuong_hieus %}
+                        <option value="{{ th.0 }}" {% if SanPham.10 == th.0 %}selected{% endif %}>{{ th.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Button trigger modal -->
+            <div class="text-center mt-2" style="display: flex; justify-content: center;">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Cập nhật</button>
+            </div>
+
+            <!-- Modal xác nhận -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật thương hiệu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có muốn cập nhật thông tin thương hiệu này không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Đồng ý</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

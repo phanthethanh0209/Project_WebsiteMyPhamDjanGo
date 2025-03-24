@@ -1,0 +1,41 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Giới thiệu
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div id="content">
+    <div class="container d-flex justify-content-around">
+        <div class="sub">
+            <h2>Giới thiệu</h2>
+            <p class="fw-bold">Về The Face Shop</p>
+            <p>Slogan: Vẻ đẹp của bạn, niềm tự hào của chúng tôi</p>
+            <ul>
+                <li>Sứ mệnh: Luôn mang đến những sẳn phẩm chính hãng, chất lượng, tiết kiệm thời gian và tiền bạc cho khách hàng.</li>
+                <li>Giá trị cốt lõi: "Chữ tín - Trách nhiệm - Tin cậy"</li>
+                <li>Chữ tín: Lấy chữ Tín làm vũ khí cạnh tranh và bảo vệ chữ Tín là bảo vệ danh dự của chính mình.</li>
+                <li>Trách nhiệm: Luôn nhận lỗi sai khi có sai sót của công ty.</li>
+                <li>
+                    Tin cậy: sự tin cậy của khách hàng là tiêu chuẩn cần thiết đầu tiên mà chúng tôi coi trọng nhất, thậm chí cao hơn các giá trị tài chính.sự tin cậy của khách hàng là tiêu chuẩn cần thiết đầu tiên mà chúng tôi coi trọng nhất, thậm
+                    chí cao hơn các giá trị tài chính.
+                </li>
+                <li>
+                    Thông tin liên hệ:
+                    <ul>
+                        <li>Hotline: 1900 8198</li>
+                        <li>Email: contact@thefaceshop.com.vn</li>
+                    </ul>
+                </li>
+                <li>Địa chỉ: THE FACE SHOP, 167 Nam Kỳ Khởi Nghĩa, Quận 1, Thành phố Hồ Chí Minh.</li>
+            </ul>
+        </div>
+        <div>
+            <img class="img-fluid" src="{% static 'img/gioithieu.jpg' %}" />
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

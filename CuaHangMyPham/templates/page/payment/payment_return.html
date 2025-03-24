@@ -1,0 +1,39 @@
+{% extends "pages/layout.html" %} {% block title %} Thanh toán {% endblock %} {% block content %} {% load static %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh; background-color: #f8f9fa;">
+    <div class="card text-center" style="width: 30rem; box-shadow: 0 4px 8px rgba(200, 41, 41, 0.2);">
+        <div class="card-header text-white" style="background: linear-gradient(45deg, #ffd1d2, #ff5893); color: white; border-top-left-radius: 10px; border-top-right-radius: 10px; padding: 15px;">
+            <h4>{{ title }}: {{ result }}</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Order ID:</strong> {{ order_id }}</p>
+            <p><strong>Amount:</strong> {{ amount }}</p>
+            <p><strong>Description:</strong> {{ order_desc }}</p>
+            <p><strong>Transaction No:</strong> {{ vnp_TransactionNo }}</p>
+            {% if vnp_ResponseCode == '00' %}
+            <p><strong>Response Code:</strong> {{ vnp_ResponseCode }} - Thành công</p>
+            {% else %}
+            <p><strong>Response Code:</strong> {{ vnp_ResponseCode }} - Lỗi</p>
+            {% endif %} {% if msg %}
+            <p class="alert-warning"> {{ msg }}</p>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <p>Bạn sẽ được chuyển về trang chủ sau <span id="countdown">5</span> giây...</p>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript để thực hiện chuyển hướng -->
+<script>
+    let countdownElement = document.getElementById("countdown");
+    let countdown = 5; // Thời gian đếm ngược, tính bằng giây
+    let interval = setInterval(() => {
+        countdown--;
+        countdownElement.textContent = countdown;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            window.location.href = "/lichSuMuaHang"; // Đường dẫn tới trang chủ
+        }
+    }, 1000); // Cập nhật mỗi giây
+</script>
+{% endblock %}

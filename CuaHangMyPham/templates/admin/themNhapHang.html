@@ -1,0 +1,152 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %} Thêm phiếu nhập hàng {% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="container">
+    <h2 class="w-100 text-center text-danger">Thêm phiếu nhập hàng mới</h2>
+    <form class="w-75 m-auto" method="post">
+        {% csrf_token %}
+
+        <!-- Mã phiếu nhập hàng -->
+        <div class="form-group">
+            <label for="id_maPNH">Mã phiếu nhập hàng</label>
+            <input name="MaPNH" type="text" class="form-control" id="id_maPNH" value="{{ maPNH }}" readonly>
+        </div>
+
+        <!-- Nhà cung cấp -->
+        <div class="form-group">
+            <label for="id_nhaCungCap">Nhà cung cấp</label>
+            <select name="MaNCC" class="form-control" id="id_nhaCungCap" required>
+                <option value="" selected>Chọn nhà cung cấp</option>
+                {% for ncc in nhaCungCapList %}
+                    <option value="{{ ncc.0 }}">{{ ncc.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Tên nhân viên -->
+        <div class="form-group">
+            <label for="id_tenTK">Tên nhân viên</label>
+            <select name="TenTK" class="form-control" id="id_tenTK" required>
+                <option value="" selected>Chọn nhân viên</option>
+                {% for tk in taiKhoanList %}
+                    <option value="{{ tk.0 }}">{{ tk.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Ngày nhập -->
+        <div class="form-group">
+            <label for="id_ngayNhap">Ngày nhập</label>
+            <input name="NgayNhap" type="datetime-local" class="form-control" id="id_ngayNhap" required>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <h5 class="mt-4">Danh sách sản phẩm</h5>
+        <div id="danhSachSanPham">
+            <!-- Dòng sản phẩm mẫu -->
+            <div class="row align-items-center mb-2 product-row">
+                <div class="col-md-4">
+                    <select name="sanpham_1" class="form-control" required>
+                        <option value="" selected>Chọn sản phẩm</option>
+                        {% for sp in sanPhamList %}
+                            <option value="{{ sp.0 }}">{{ sp.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" name="soluong_1" class="form-control" placeholder="Số lượng" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="gianhap_1" class="form-control" placeholder="Giá nhập" step="0.01" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger remove-row">Xóa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nút thêm sản phẩm -->
+        <div class="text-center mt-3">
+            <button type="button" id="addProduct" class="btn btn-primary">Thêm sản phẩm</button>
+        </div>
+
+        <!-- Ghi chú -->
+        <div class="form-group mt-4">
+            <label for="id_ghiChu">Ghi chú</label>
+            <textarea name="ghiChu" class="form-control" id="id_ghiChu" rows="3"></textarea>
+        </div>
+
+        <!-- Xác nhận thêm phiếu nhập -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Lưu phiếu nhập hàng</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let productCount = 1;
+
+    // Handle adding a product row
+    document.getElementById('addProduct').addEventListener('click', function() {
+        productCount++;
+        const newRow = document.createElement('div');
+        newRow.className = 'row align-items-center mb-2 product-row';
+        newRow.innerHTML = `
+            <div class="col-md-4">
+                <select name="sanpham_${productCount}" class="form-control" required>
+                    <option value="" selected>Chọn sản phẩm</option>
+                    {% for sp in sanPhamList %}
+                        <option value="{{ sp.0 }}">{{ sp.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="soluong_${productCount}" class="form-control" placeholder="Số lượng" required>
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="gianhap_${productCount}" class="form-control" placeholder="Giá nhập" step="0.01" required>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger remove-row">Xóa</button>
+            </div>
+        `;
+        document.getElementById('danhSachSanPham').appendChild(newRow);
+    });
+
+    // Handle removing a product row
+    document.getElementById('danhSachSanPham').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-row')) {
+            e.target.closest('.product-row').remove();
+        }
+    });
+
+    // Handle form submission to check if all product quantities and prices are valid
+    document.querySelector('form').addEventListener('submit', function(e) {
+        let isValid = true;
+
+        // Loop through each product row to validate input fields
+        const productRows = document.querySelectorAll('.product-row');
+        productRows.forEach(function(row) {
+            const quantityInput = row.querySelector('input[name^="soluong"]');
+            const priceInput = row.querySelector('input[name^="gianhap"]');
+            
+            const quantity = parseFloat(quantityInput.value);
+            const price = parseFloat(priceInput.value);
+
+            if (quantity <= 0 || price <= 0) {
+                alert('Số lượng và giá nhập phải lớn hơn 0!');
+                isValid = false;
+            }
+        });
+
+        // If validation fails, prevent form submission
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}

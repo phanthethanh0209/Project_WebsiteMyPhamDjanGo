@@ -1,0 +1,174 @@
+{% extends "pages/layoutAd.html" %} 
+{% block title %} Sửa phiếu nhập hàng {% endblock %} 
+
+{% block content %}
+{% load static %}
+<div class="container">
+    <h2 class="w-100 text-center text-danger">Sửa phiếu nhập hàng</h2>
+    <form class="w-50 m-auto" method="post">
+        {% csrf_token %}
+        
+        <!-- Mã phiếu nhập hàng (Tự động) -->
+        <div class="form-group">
+            <label for="id_maPNH">Mã phiếu nhập hàng</label>
+            <input name="MaPNH" type="text" class="form-control" id="id_maPNH" value="{{ maPNH }}" readonly>
+        </div> 
+
+        <!-- Nhà cung cấp (ComboBox) -->
+        <div class="form-group">
+            <label for="id_nhaCungCap">Nhà cung cấp</label>
+            <select name="MaNCC" class="form-control" id="id_nhaCungCap">
+                <option value="" selected>Chọn nhà cung cấp</option>
+                {% for ncc in nhaCungCapList %}
+                    <option value="{{ ncc.0 }}" {% if ncc.0 == form.MaNCC %}selected{% endif %}>
+                        {{ ncc.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Tên nhân viên (ComboBox) -->
+        <div class="form-group">
+            <label for="id_tenTK">Tên nhân viên</label>
+            <select name="TenTK" class="form-control" id="id_tenTK">
+                <option value="" selected>Chọn nhân viên</option>
+                {% for tk in taiKhoanList %}
+                    <option value="{{ tk.0 }}" {% if tk.0 == form.TenTK %}selected{% endif %}>
+                        {{ tk.1 }} <!-- Hiển thị Tên nhân viên -->
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Ngày nhập -->
+        <div class="form-group">
+            <label for="id_ngayNhap">Ngày nhập</label>
+            <input name="NgayNhap" type="datetime-local" class="form-control" id="id_ngayNhap" value="{{ form.NgayNhap|default_if_none:'' }}">
+        </div>
+         <!-- Danh sách sản phẩm -->
+         <h5 class="mt-4">Danh sách sản phẩm</h5>
+         <div id="danhSachSanPham">
+             {% for sp in danhSachSanPham %}
+             <div class="row align-items-center mb-2 product-row">
+                 <div class="col-md-4">
+                     <select name="sanpham_{{ forloop.counter }}" class="form-control" required>
+                         <option value="" selected>Chọn sản phẩm</option>
+                         {% for sanpham in sanPhamList %}
+                         <option value="{{ sanpham.0 }}" {% if sanpham.0 == sp.MaSP %}selected{% endif %}>
+                             {{ sanpham.1 }}
+                         </option>
+                         {% endfor %}
+                     </select>
+                 </div>
+                 <div class="col-md-2">
+                     <input type="number" name="soluong_{{ forloop.counter }}" class="form-control" 
+                            placeholder="Số lượng" value="{{ sp.SoLuong }}" required>
+                 </div>
+                 <div class="col-md-3">
+                     <input type="number" name="gianhap_{{ forloop.counter }}" class="form-control" 
+                            placeholder="Giá nhập" value="{{ sp.GiaNhap }}" step="0.01" required>
+                 </div>
+                 <div class="col-md-2">
+                     <button type="button" class="btn btn-danger remove-row">Xóa</button>
+                 </div>
+             </div>
+             {% endfor %}
+         </div>
+         
+         <!-- Nút thêm sản phẩm -->
+         <div class="text-center mt-3">
+             <button type="button" id="addProduct" class="btn btn-primary">Thêm sản phẩm</button>
+         </div>
+
+        <!-- Button trigger modal -->
+        <div class="text-center mt-2" style="display: flex; justify-content: center;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Sửa phiếu nhập hàng</button>
+        </div>
+
+        <!-- Modal xác nhận -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận sửa phiếu nhập hàng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn sửa phiếu nhập hàng này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-danger">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>  
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let productCount = 1;
+
+    // Handle adding a product row
+    document.getElementById('addProduct').addEventListener('click', function() {
+        productCount++;
+        const newRow = document.createElement('div');
+        newRow.className = 'row align-items-center mb-2 product-row';
+        newRow.innerHTML = `
+            <div class="col-md-4">
+                <select name="sanpham_${productCount}" class="form-control" required>
+                    <option value="" selected>Chọn sản phẩm</option>
+                    {% for sp in sanPhamList %}
+                        <option value="{{ sp.0 }}">{{ sp.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="soluong_${productCount}" class="form-control" placeholder="Số lượng" required>
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="gianhap_${productCount}" class="form-control" placeholder="Giá nhập" step="0.01" required>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger remove-row">Xóa</button>
+            </div>
+        `;
+        document.getElementById('danhSachSanPham').appendChild(newRow);
+    });
+
+    // Handle removing a product row
+    document.getElementById('danhSachSanPham').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-row')) {
+            e.target.closest('.product-row').remove();
+        }
+    });
+
+    // Handle form submission to check if all product quantities and prices are valid
+    document.querySelector('form').addEventListener('submit', function(e) {
+        let isValid = true;
+
+        // Loop through each product row to validate input fields
+        const productRows = document.querySelectorAll('.product-row');
+        productRows.forEach(function(row) {
+            const quantityInput = row.querySelector('input[name^="soluong"]');
+            const priceInput = row.querySelector('input[name^="gianhap"]');
+            
+            const quantity = parseFloat(quantityInput.value);
+            const price = parseFloat(priceInput.value);
+
+            if (quantity <= 0 || price <= 0) {
+                alert('Số lượng và giá nhập phải lớn hơn 0!');
+                isValid = false;
+            }
+        });
+
+        // If validation fails, prevent form submission
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}

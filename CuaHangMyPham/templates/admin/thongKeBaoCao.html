@@ -1,0 +1,247 @@
+{% extends "pages/layoutAd.html" %}
+
+{% block title %} Thống kê & Báo cáo {% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <h1 class="text-center text-primary font-weight-bold">Thống kê & Báo cáo</h1>
+    <p class="text-center text-muted">Dưới đây là các báo cáo chi tiết về doanh thu, sản phẩm và đơn hàng.</p>
+    <div class="text-right mb-3">
+        <a href="{% url 'export_thong_ke_excel' %}" class="btn btn-success">
+            <i class="fas fa-file-excel"></i> Xuất Báo Cáo
+        </a>
+    </div>
+    
+    <!-- CSS tùy chỉnh -->
+    <style>
+        .table-custom {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .table-custom th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+        }
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .table-custom tbody tr:hover {
+            background-color: #f8d7da;
+        }
+        .table-custom td, .table-custom th {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+        }
+        h2, h3, h4 {
+            font-weight: bold;
+            color: #4e73df;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+            padding: 8px;
+        }
+    </style>
+
+    <!-- DOANH THU -->
+    <div class="mt-5">
+        <h2 class="text-secondary">1. Thống kê Doanh thu</h2>
+        
+        <div class="row mt-4">
+            <!-- Biểu đồ doanh thu theo ngày -->
+            <div class="col-md-6">
+                <h4>Biểu đồ Doanh thu theo Ngày</h4>
+                <canvas id="chartDoanhThuNgay"></canvas>
+            </div>
+            <!-- Biểu đồ doanh thu theo loại sản phẩm -->
+            <div class="col-md-6">
+                <h4>Biểu đồ Doanh thu theo Loại Sản phẩm</h4>
+                <canvas id="chartDoanhThuLoaiSP"></canvas>
+            </div>
+        </div>
+        
+        <!-- Bảng doanh thu -->
+        <div class="mt-5">
+            <h4 class="text-secondary">Doanh thu theo Tháng</h4>
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Năm</th>
+                        <th>Tháng</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nam, thang, doanh_thu in doanh_thu_thang %}
+                    <tr>
+                        <td class="text-center">{{ nam }}</td>
+                        <td class="text-center">{{ thang }}</td>
+                        <td class="text-right">{{ doanh_thu|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">Không có dữ liệu.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SẢN PHẨM -->
+    <div class="mt-5">
+        <h2 class="text-secondary">2. Thống kê Sản phẩm</h2>
+        <div class="row mt-4">
+            <!-- Biểu đồ sản phẩm bán chạy -->
+            <div class="col-md-6">
+                <h4>Biểu đồ Sản phẩm Bán chạy</h4>
+                <canvas id="chartSanPhamBanChay"></canvas>
+            </div>
+            <!-- Bảng sản phẩm tồn kho -->
+            <div class="col-md-6">
+                <h4>Sản phẩm Tồn kho</h4>
+                <table class="table table-custom">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng tồn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sp, so_luong_ton in sp_ton_kho %}
+                        <tr>
+                            <td>{{ sp }}</td>
+                            <td class="text-center">{{ so_luong_ton }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">Không có dữ liệu.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ĐƠN HÀNG -->
+    <div class="mt-5">
+        <h2 class="text-secondary">3. Thống kê Đơn hàng</h2>
+        <div class="row mt-4">
+            <!-- Biểu đồ trạng thái đơn hàng -->
+            <div class="col-md-6">
+                <h4>Biểu đồ Trạng thái Đơn hàng</h4>
+                <canvas id="chartTrangThaiDonHang"></canvas>
+            </div>
+            <!-- Bảng trạng thái đơn hàng -->
+            <div class="col-md-6">
+                <h4>Số lượng Đơn hàng theo Trạng thái</h4>
+                <table class="table table-custom">
+                    <thead>
+                        <tr>
+                            <th>Trạng thái</th>
+                            <th>Số lượng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trang_thai, so_luong in don_hang_trang_thai %}
+                        <tr>
+                            <td>{{ trang_thai }}</td>
+                            <td class="text-center">{{ so_luong }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">Không có dữ liệu.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script for Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Doanh thu theo ngày
+    const doanhThuNgayCtx = document.getElementById('chartDoanhThuNgay');
+    new Chart(doanhThuNgayCtx, {
+        type: 'line',
+        data: {
+            labels: [{% for ngay, _ in doanh_thu_ngay %}"{{ ngay }}",{% endfor %}],
+            datasets: [{
+                label: 'Doanh thu (Ngày)',
+                data: [{% for _, doanh_thu in doanh_thu_ngay %}{{ doanh_thu }},{% endfor %}],
+                borderColor: '#4e73df',
+                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Ngày' } },
+                y: { title: { display: true, text: 'Doanh thu (VNĐ)' }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Doanh thu theo loại sản phẩm
+    const doanhThuLoaiSPCtx = document.getElementById('chartDoanhThuLoaiSP');
+    new Chart(doanhThuLoaiSPCtx, {
+        type: 'bar',
+        data: {
+            labels: [{% for loai, _ in doanh_thu_loai_sp %}"{{ loai }}",{% endfor %}],
+            datasets: [{
+                label: 'Doanh thu (Loại sản phẩm)',
+                data: [{% for _, doanh_thu in doanh_thu_loai_sp %}{{ doanh_thu }},{% endfor %}],
+                backgroundColor: 'rgba(28, 200, 138, 0.7)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Loại sản phẩm' } },
+                y: { title: { display: true, text: 'Doanh thu (VNĐ)' }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Sản phẩm bán chạy
+    const spBanChayCtx = document.getElementById('chartSanPhamBanChay');
+    new Chart(spBanChayCtx, {
+        type: 'pie',
+        data: {
+            labels: [{% for sp, _ in sp_ban_chay %}"{{ sp }}",{% endfor %}],
+            datasets: [{
+                data: [{% for _, so_luong in sp_ban_chay %}{{ so_luong }},{% endfor %}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Trạng thái đơn hàng
+    const trangThaiDonHangCtx = document.getElementById('chartTrangThaiDonHang');
+    new Chart(trangThaiDonHangCtx, {
+        type: 'doughnut',
+        data: {
+            labels: [{% for trang_thai, _ in don_hang_trang_thai %}"{{ trang_thai }}",{% endfor %}],
+            datasets: [{
+                data: [{% for _, so_luong in don_hang_trang_thai %}{{ so_luong }},{% endfor %}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: { responsive: true }
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,56 @@
+{% extends "pages/layoutAd.html" %}
+
+{% block title %} Trang chủ Admin - Thêm loại sản phẩm {% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="container">
+    <h2 class="w-100 text-center text-danger"> Thêm loại sản phẩm mới</h2>
+    <form class="w-50 m-auto" method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_ten_loai">Tên loại</label>
+            <input name="TenLoai" type="text" class="form-control" id="id_ten_loai" value="{{ form.TenLoai.value|default_if_none:'' }}">
+        </div>
+        
+        <!-- Dropdown for Nhà Cung Cấp -->
+        <div class="form-group">
+            <label for="id_maNCC">Tên nhà cung cấp</label>
+            <select name="MaNCC" class="form-control" id="id_maNCC" required>
+                <option value="">Chọn nhà cung cấp</option>
+                {% for ncc in nha_cung_caps %}
+                    <option value="{{ ncc.0 }}" {% if ncc.0 == form.MaNCC.value %}selected{% endif %}>
+                        {{ ncc.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Button trigger modal -->
+        <div class="text-center mt-2" style="display: flex; justify-content: center;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thêm loại sản phẩm</button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận thêm loại sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn thêm loại sản phẩm này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-danger">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>  
+</div>
+{% endblock %}

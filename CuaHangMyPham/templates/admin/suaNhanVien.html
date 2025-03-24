@@ -1,0 +1,78 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %} Sửa thông tin nhân viên {% endblock %}
+
+{% block content %}
+{% load static %}
+<style>
+    .border-radius-form {
+    border-radius: 10px; /* Adjust the value as needed */
+    border: 1px solid #ccc; /* Optional: Add a border to make the radius visible */
+    padding: 20px; /* Optional: Add padding for better appearance */
+}
+</style>
+
+<div class="container mb-3">
+    <div class="row justify-content-center">
+            <form method="post" class="w-50 border-radius-form ">
+                {% csrf_token %}
+                <h2 class="w-100 text-center text-danger"> Sửa thông tin nhân viên</h2>
+                
+                <div class="form-group">
+                    <label for="id_maNV">Mã nhân viên</label>
+                    <input name="MaNV" type="text" class="form-control" id="id_maNV" value="{{ MaNV }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_tenNV">Tên nhân viên</label>
+                    <input name="TenNV" type="text" class="form-control" id="id_tenNV" value="{{ TenNV }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_diaChi">Địa chỉ</label>
+                    <input name="DiaChi" type="text" class="form-control" id="id_diaChi" value="{{ DiaChi }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_sdt">Số điện thoại</label>
+                    <input name="SDT" type="text" class="form-control" id="id_sdt" value="{{ SDT }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input name="Email" type="email" class="form-control" id="id_email" value="{{ Email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_chucVu">Chức vụ</label>
+                    <input name="ChucVu" type="text" class="form-control" id="id_chucVu" value="{{ ChucVu }}" required>
+                </div>
+
+                <!-- Button trigger modal -->
+                <div class="text-center mt-2" style=" display: flex; justify-content: center;">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Cập nhật</button>
+                </div>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật thông tin nhân viên</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có muốn cập nhật thông tin nhân viên này không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-danger">Đồng ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>   
+</div>
+
+{% endblock %}

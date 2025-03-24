@@ -1,0 +1,237 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Sản phẩm
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+<div id="main">
+    <div id="content">
+        <div class="grid">
+            <div class="grid__row">
+                <!--THANH BAR BÊN TRÁI-->
+                <div class="grid_column-2">
+                    <div class="aside-filter">
+                        <div class="headding-filter">
+                            <h2 class="title-head">Bộ lọc</h2>
+                            <p>Giúp bạn tìm kiếm sản phẩm nhanh hơn</p>
+                        </div>
+                        <hr>
+                        <div class="filter">
+                            <h3>Thương hiệu</h3>
+                            <div class="search-filter">
+                                <input type="text" placeholder="Tìm thương hiệu">
+                                <a class="bg-icon-search" href=""><i class="ti-search "></i></a>
+                            </div>
+                            <div class="filter-brand">
+                                <ul class="filter-option">
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>3CE</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>AFC</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>AGAPAN</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>3W Clinic</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>A-DERMA</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>Vichy</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>Victoria's</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <h3>Giá sản phẩm</h3>
+                            <form method="get" id="filter-form">
+                                <ul class="filter-option">
+                                    <li class="filter-item">
+                                        <input type="radio" name="gia_khoang" value="duoi_100"
+                                            {% if 'duoi_100' in gia_khoang %}checked{% endif %}
+                                            onchange="this.form.submit();">
+                                        <span>Giá dưới 100.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="radio" name="gia_khoang" value="100_200"
+                                            {% if '100_200' in gia_khoang %}checked{% endif %}
+                                            onchange="this.form.submit();">
+                                        <span>100.000đ - 200.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="radio" name="gia_khoang" value="200_300"
+                                            {% if '200_300' in gia_khoang %}checked{% endif %}
+                                            onchange="this.form.submit();">
+                                        <span>200.000đ - 300.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="radio" name="gia_khoang" value="300_500"
+                                            {% if '300_500' in gia_khoang %}checked{% endif %}
+                                            onchange="this.form.submit();">
+                                        <span>300.000đ - 500.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="radio" name="gia_khoang" value="500_1000"
+                                            {% if '500_1000' in gia_khoang %}checked{% endif %}
+                                            onchange="this.form.submit();">
+                                        <span>500.000đ - 1.000.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="radio" name="gia_khoang" value="tren_1000"
+                                            {% if 'tren_1000' in gia_khoang %}checked{% endif %}
+                                            onchange="this.form.submit();">
+                                        <span>Trên 1.000.000đ</span>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--DANH SÁCH SP LOAD LÊN TỪ DATABASE-->
+                <div class="grid_colum-10">
+                    <div class="grid__row">
+
+                        <div class="home-filter-headding" style="height:60px;width:100%">
+                            <h1 class="home-title-product">
+                                Danh Sách Sản Phẩm
+                            </h1>
+                            <div class="home-filter">
+                                <ul class="list-filter">
+                                    <li>
+                                        <a style="color:blue;" href="#" onclick="updateSorting('tang_dan'); return false;">🡅 Giá tăng dần</a>
+                                    </li>
+                                    <li>
+                                        <a style="color:red;" href="#" onclick="updateSorting('giam_dan'); return false;">🡇 Giá giảm dần</a>
+                                    </li>
+                                </ul>
+                            </div> 
+                        </div>
+
+                        {% for product in san_phams %}
+                        <div class="grid_column-2-4">
+                            <div class="home-product-item">
+                                <div class="product-img">
+                                    <a href="/shop_detail/{{ product.0 }}">
+                                        <img src="{% static 'img/' %}{{ product.2 }}" alt="{{ product.1 }}" style="width: 220px; height: 220px;">
+                                    </a>
+                                </div>
+                                <h4 class="product-item-name">
+                                    <a href="{% url 'shop_detail' product.0 %}">{{ product.1 }}</a>
+                                </h4>
+                                <div class="product-item-price">
+                                    <span class="price-current">{{ product.3|floatformat:0 }} </span>
+                                    <span class="vnd">₫</span>
+                                </div>
+                                <div class="product-item-action">
+                                    <span class="product-item-action-like product-item-action-like-liked">
+                                        <i class="product-item-action-like-empty ti-heart"></i>
+                                        <i class="product-item-action-like-fill fa-solid fa-heart"></i>
+                                    </span>
+                                    <div class="product-item-action-rating">
+                                        <i class="product-item-action-star-gold fa-solid fa-star"></i>
+                                        <i class="product-item-action-star-gold fa-solid fa-star"></i>
+                                        <i class="product-item-action-star-gold fa-solid fa-star"></i>
+                                        <i class="product-item-action-star-gold fa-solid fa-star"></i>
+                                        <i class="product-item-action-star-gold fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <a class="product-item-btn-addcart" href="/addCart/?action=addcart&id_product={{ product.0 }}">Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PHÂN TRANG -->
+        <div class="container">
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <!-- Nút "Previous" -->
+                            <li class="page-item {% if san_phams.number <= 1 %} disabled {% endif %}">
+                                <a class="page-link" href="/shop?page={{ previous_page }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <!-- Hiển thị các nút số trang -->
+                            {% for i in page_range %}
+                                <li class="page-item {% if i == san_phams.number %}active{% endif %}">
+                                    <a class="page-link" href="/shop?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+
+                            <!-- Nút "Next" -->
+                            <li class="page-item {% if san_phams.number >= total_pages %} disabled {% endif %}">
+                                <a class="page-link" href="/shop?page={{ next_page }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div> 
+        
+    </div>
+
+</div>
+
+<script>
+    function updateFilters(checkbox) {
+        // Lấy URL hiện tại
+        const url = new URL(window.location.href);
+
+        // Lấy danh sách giá trị "gia_khoang" hiện tại từ URL
+        const params = url.searchParams;
+        const selectedValues = params.getAll('gia_khoang');
+
+        // Kiểm tra trạng thái checkbox
+        if (checkbox.checked) {
+            // Thêm giá trị nếu chưa có
+            if (!selectedValues.includes(checkbox.value)) {
+                params.append('gia_khoang', checkbox.value);
+            }
+        } else {
+            // Xóa giá trị nếu checkbox bị bỏ chọn
+            params.delete('gia_khoang'); // Xóa tất cả trước
+            selectedValues.forEach(value => {
+                if (value !== checkbox.value) {
+                    params.append('gia_khoang', value);
+                }
+            });
+        }
+
+        // Cập nhật URL và tải lại trang
+        window.location.href = url.toString();
+    }
+
+    function updateSorting(order) {
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+
+        // Xóa tham số `sap_xep` cũ nếu tồn tại
+        params.delete('sap_xep');
+
+        // Thêm tham số `sap_xep` mới
+        params.append('sap_xep', order);
+
+        // Cập nhật URL
+        window.location.href = url.toString();
+    }
+</script>
+
+{% endblock %}

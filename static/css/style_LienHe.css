@@ -1,0 +1,368 @@
+/* begin content */
+
+.hotline-phone-ring-wrap {
+    /*Thanh ngoài cùng dịch chuyển hết*/
+    position: fixed;
+    /*Định vị một chỗ không thay đổi*/
+    bottom: 0;
+    /*Khoảng cách tính từ mép dưới ngoài*/
+    left: 100px;
+    /*Thanh ngoài cùng định vị bên phải*/
+    z-index: 999999;
+    /*Càng Cao thì đứng trước và hiện lên trên*/
+}
+
+.hotline-phone-ring {
+    /*dien thoai bao cả 3 cái */
+    position: relative;
+    /*định vị tuyệt đối không gây ảnh hưởng tới vị trí ban đầu */
+    visibility: visible;
+    /*thành phận mặc định*/
+    background-color: transparent;
+    /*trong suot*/
+    width: 110px;
+    height: 50px;
+    cursor: pointer;
+    /*Con tro chuột dạng bàn tay*/
+    z-index: 11;
+    -webkit-backface-visibility: hidden;
+    /*trình duyệt trên Chrome và Safari - 
+    xác định mặt phía sau của element có được xoay hay : hidden ko hiển thị mặt sau*/
+    -webkit-transform: translateZ(0);
+    /*Trình duyệt trên Chrome và Safari xác định dịch chuyển 2D*/
+    transition: visibility .5s;
+    right: 38px;
+    bottom: 78px;
+    display: block;
+    /*Thành Phần sẽ đứng một hàng doc658 lập so với thành phần trước và sau nó*/
+}
+
+.hotline-phone-ring-circle {
+    /*Dòng tròn ngoài cùng*/
+    width: 85px;
+    height: 85px;
+    top: 10px;
+    right: 12px;
+    position: absolute;
+    background-color: transparent;
+    border-radius: 100%;
+    border: 2px solid #e60808;
+    -webkit-animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+    animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+    transition: all .5s;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    opacity: 0.5;
+}
+
+.hotline-phone-ring-circle-fill {
+    /*Hình tròn lợt gần đó*/
+    width: 55px;
+    height: 55px;
+    top: 25px;
+    right: 25px;
+    position: absolute;
+    background-color: rgba(230, 8, 8, 0.7);
+    border-radius: 100%;
+    border: 2px solid transparent;
+    -webkit-animation: phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+    animation: phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+    transition: all .5s;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.hotline-phone-ring-img-circle {
+    /*Chuong hình tròn có ảnh điện thoại*/
+    background-color: #e60808;
+    width: 33px;
+    height: 33px;
+    top: 37px;
+    right: 35px;
+    position: absolute;
+    background-size: 20px;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    -webkit-animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+    animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hotline-phone-ring-img-circle .pps-btn-img {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.hotline-phone-ring-img-circle .pps-btn-img img {
+    width: 20px;
+    height: 20px;
+}
+
+.hotline-bar {
+    position: absolute;
+    background: rgba(230, 8, 8, 0.75);
+    height: 40px;
+    width: 180px;
+    line-height: 40px;
+    border-radius: 3px;
+    padding: 0 10px;
+    background-size: 100%;
+    cursor: pointer;
+    transition: all 0.8s;
+    -webkit-transition: all 0.8s;
+    z-index: 9;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 50px !important;
+    /* width: 175px !important; */
+    bottom: 55px;
+}
+
+.hotline-bar>a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    text-indent: 50px;
+    display: block;
+    letter-spacing: 1px;
+    line-height: 40px;
+    font-family: Arial;
+}
+
+.hotline-bar>a:hover,
+.hotline-bar>a:active {
+    color: #fff;
+}
+
+@-webkit-keyframes phonering-alo-circle-anim {
+    0% {
+        -webkit-transform: rotate(0) scale(0.5) skew(1deg);
+        -webkit-opacity: 0.1;
+    }
+    30% {
+        -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+        -webkit-opacity: 0.5;
+    }
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+        -webkit-opacity: 0.1;
+    }
+}
+
+@-webkit-keyframes phonering-alo-circle-fill-anim {
+    0% {
+        -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+        opacity: 0.6;
+    }
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+        opacity: 0.6;
+    }
+    100% {
+        -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+        opacity: 0.6;
+    }
+}
+
+@-webkit-keyframes phonering-alo-circle-img-anim {
+    0% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+    }
+    10% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+    }
+    20% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+    }
+    30% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+    }
+    40% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+    }
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+    }
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .hotline-bar {
+        display: none;
+    }
+    .hotline-phone-ring-wrap {
+        right: 80px;
+    }
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+
+.cangiua {
+    text-align: center;
+    color: purple;
+}
+
+#content {
+    width: 100%;
+    padding: 20px 0px;
+    background-color: #f8d6d6;
+    line-height: 1.6;
+}
+
+section {
+    background-color: #F5F5DC;
+}
+
+section .address-nav {
+    padding: 10px 0px;
+    font-size: 17px;
+}
+
+section .address-nav .content-nav {
+    margin-left: 122px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.angle-right {
+    font-size: 10px;
+    font-weight: bolder;
+    padding: 10px;
+    margin: 0 5px;
+}
+
+section .address-nav .content-nav li {
+    display: inline;
+}
+
+section .address-nav .content-nav li a {
+    color: #000;
+}
+
+section .address-nav .content-nav li b span {
+    color: #ff9897;
+}
+
+.flex1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aside-filter {
+    line-height: 1.6;
+    background-color: #fff;
+    padding: 0px 12px
+}
+
+.far {
+    border-radius: 99px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    margin: 5px 10px 10px 0px;
+    color: #ff9897;
+    font-size: 25px;
+    background: #fff;
+    border: 0px solid #ff9897;
+}
+
+.textLH {
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 15px;
+    border-radius: 30px;
+    padding: 0 30px;
+    height: 50px;
+    line-height: 50px;
+    background: #ff9897;
+    width: 180px;
+}
+
+.textLH:hover {
+    cursor: pointer;
+    background-color: #F5F5DC;
+    color: #000;
+    border: none;
+}
+
+.home-title-product {
+    font-size: 30px;
+    padding: 5px 0;
+}
+
+.require {
+    color: red;
+}
+
+.input-contact {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+}
+
+.map {
+    padding: 20px 0;
+}
+
+.cangiua {
+    color: #ccc;
+    margin-left: -70px;
+}
+
+
+/* end content */
+
+
+/* respon section */
+
+
+/* tablet */
+
+@media(min-width:740px) and (max-width:1023px) {
+    section .address-nav {
+        padding: 10px 57px;
+    }
+    section .address-nav .content-nav {
+        margin-left: 45px;
+    }
+}
+
+
+/* mobile */
+
+@media(max-width: 740px) {
+    section .address-nav .content-nav {
+        margin-left: 22px;
+    }
+    section .address-nav {
+        padding: 10px 34px;
+    }
+}

@@ -1,0 +1,30 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Thông tin chi tiết nhân viên
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <h2>Thông tin chi tiết sản phẩm</h2>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Mã sản phẩm:</strong> {{ SanPham.0 }}</p>
+            <p><strong>Tên sản phẩm:</strong> {{ SanPham.1 }}</p>
+            <p><strong>Nhà sản xuất:</strong> {{ SanPham.3 }}</p>
+            <p><strong>Hạn sử dụng:</strong> {{ SanPham.4 }}</p>
+            <p><strong>Gía bán:</strong> {{ SanPham.5 }}</p>
+            <p><strong>Số lượng tồn:</strong> {{ SanPham.6 }}</p>
+            <p><strong>Trọng lượng:</strong> {{ SanPham.7 }}</p>
+            <p><strong>Tên loại:</strong> {{ SanPham.9 }}</p>
+            <p><strong>Tên thương hiệu:</strong> {{ SanPham.10 }}</p>
+            <p><strong>Mô tả:</strong> {{ SanPham.5 }}</p>
+            <p><strong>Hình ảnh:</strong> </p>
+            <img src="{% static 'img/' %}{{ SanPham.2 }}" alt="{{ SanPham.2 }}" style="width: 220px; height: 220px;"></a>
+        </div>
+    </div>
+    <a class="btn btn-secondary mt-3" href="{% url 'danhSachNhanVien' %}">Quay lại</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %} Thêm nhân viên mới {% endblock %}
+
+{% block content %}
+{% load static %}
+<style>
+    .border-radius-form {
+    border-radius: 10px; /* Adjust the value as needed */
+    border: 1px solid #ccc; /* Optional: Add a border to make the radius visible */
+    padding: 20px; /* Optional: Add padding for better appearance */
+}
+</style>
+
+
+<div class="container mb-3">
+        <form class="w-50 m-auto border-radius-form" method="post">
+        {% csrf_token %}
+        <h2 class="w-100 text-center text-danger"> Thêm nhân viên mới</h2>
+        
+        <div class="form-group">
+            <label for="id_tenNV">Tên nhân viên</label>
+            <input name="TenNV" type="text" class="form-control" id="id_tenNV" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_diaChi">Địa chỉ</label>
+            <input name="DiaChi" type="text" class="form-control" id="id_diaChi" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_sdt">Số điện thoại</label>
+            <input name="SDT" type="text" class="form-control" id="id_sdt" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            <input name="Email" type="email" class="form-control" id="id_email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_chucVu">Chức vụ</label>
+            <input name="ChucVu" type="text" class="form-control" id="id_chucVu" required>
+        </div>
+
+        <!-- <div class="form-group">
+            <label for="id_tenTK">Tên tài khoản</label>
+            <input name="TenTK" type="text" class="form-control" id="id_tenTK" required>
+        </div> -->
+
+        <!-- Button trigger modal -->
+        <div class="text-center mt-2" style=" display: flex; justify-content: center;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thêm nhân viên</button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận thêm nhân viên</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn thêm nhân viên này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-danger">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

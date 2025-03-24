@@ -1,0 +1,190 @@
+{% extends "pages/layoutAd.html" %} {% block title %} Trang chủ admin {% endblock %} {% block content %} {% load humanize %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md" style="border-radius: 30px">
+            <h2 class="w-100 text-center p-3 text-danger">THÊM SẢN PHẨM VÀO KHUYẾN MÃI</h2>
+            <p><b>Tên khuyến mãi:</b> {{ khuyen_mai.1 }}</p>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <!-- Cột Mã khuyến mãi và Ngày bắt đầu -->
+                    <div class="col-md-6">
+                        <p><strong>Mã khuyến mãi:</strong> {{ khuyen_mai.0 }}</p>
+                        <div class="form-group d-flex">
+                            <div class="col-md-5">
+                                <label for="start_date"><b>Ngày bắt đầu</b></label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="date" id="start_date" name="start_date" required class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột Ngày kết thúc -->
+                    <div class="col-md-6">
+                        <p><strong>Phần trăm giảm:</strong> {{ khuyen_mai.2|floatformat:0|intcomma }} %</p>
+                        <div class="form-group d-flex">
+                            <div class="col-md-5">
+                                <label for="end_date"><b>Ngày kết thúc</b></label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="date" id="end_date" name="end_date" required class="form-control" onchange="validateEndDate()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Thông báo -->
+                <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="errorModalLabel">Lỗi</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Ngày kết thúc không được nhỏ hơn ngày bắt đầu. Vui lòng chọn lại!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function validateDates() {
+                        const startDateInput = document.getElementById('start_date');
+                        const endDateInput = document.getElementById('end_date');
+
+                        const startDate = startDateInput.value;
+                        const endDate = endDateInput.value;
+
+                        if (startDate && endDate) {
+                            if (new Date(startDate) >= new Date(endDate)) {
+                                // Hiển thị modal thông báo
+                                const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                errorModal.show();
+
+                                // Reset giá trị trường không hợp lệ
+                                if (startDateInput === document.activeElement) {
+                                    startDateInput.value = '';
+                                } else {
+                                    endDateInput.value = '';
+                                }
+                            }
+                        }
+                    }
+
+                    // Gắn sự kiện onchange cho cả hai trường
+                    document.getElementById('start_date').addEventListener('change', validateDates);
+                    document.getElementById('end_date').addEventListener('change', validateDates);
+                </script>
+
+
+
+                <div class="row py-3 d-flex align-items-center">
+                    <div class="col-md-6">
+                        <h3>Danh sách sản phẩm</h3>
+                    </div>
+
+                    <div class="col-md-6 text-right ">
+                        <input type="checkbox" id="selectAll" name="select" /> <label for="select" class="fs-2"> Chọn tất cả</label>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá sản phẩm</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="product_list">
+                        {% for product in san_pham_list %}
+                        <tr>
+                            <td>{{ product.0 }}</td>
+                            <td>{{ product.1 }}</td>
+                            <td>{{ product.2|floatformat:0|intcomma }}</td>
+                            <td>{{ product.3|date:"d-m-Y H:i:s" }}</td>
+                            <td>{{ product.4|date:"d-m-Y H:i:s" }}</td>
+                            <td><input type="checkbox" name="selected_products" value="{{ product.0 }}" /></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary">Thêm sản phẩm vào khuyến mãi</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lắng nghe sự kiện thay đổi ngày bắt đầu và kết thúc
+    document.getElementById('start_date').addEventListener('change', getAvailableProducts);
+    document.getElementById('end_date').addEventListener('change', getAvailableProducts);
+
+    function getAvailableProducts() {
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+
+        if (startDate && endDate) {
+            fetch(`/admin/get_available_products/${startDate}/${endDate}/`)
+                .then(response => response.json())
+                .then(data => {
+                    let productListHTML = '';
+                    data.products.forEach(product => {
+                        // Hàm định dạng ngày giờ
+                        const formatDateTime = (dateStr) => {
+                            if (!dateStr) return ''; // Trả về chuỗi rỗng nếu ngày không tồn tại
+                            const date = new Date(dateStr);
+                            const day = date.getDate().toString().padStart(2, '0');
+                            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0
+                            const year = date.getFullYear();
+                            const hours = date.getHours().toString().padStart(2, '0');
+                            const minutes = date.getMinutes().toString().padStart(2, '0');
+                            const seconds = date.getSeconds().toString().padStart(2, '0');
+                            return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+                        };
+
+                        // Định dạng NgayBD và NgayKT
+                        const ngayBD = formatDateTime(product.NgayBD);
+                        const ngayKT = formatDateTime(product.NgayKT);
+
+                        productListHTML += `
+                    <tr>
+                        <td>${product.MaSP}</td>
+                        <td>${product.TenSP}</td>
+                        <td>${product.GiaSP}</td>
+                        <td>${ngayBD}</td>
+                        <td>${ngayKT}</td>
+                        <td><input type="checkbox" name="selected_products" value="${product.MaSP}" /></td>
+                    </tr>
+                `;
+                    });
+                    document.getElementById('product_list').innerHTML = productListHTML;
+                })
+                .catch(error => console.error('Error fetching available products:', error));
+        }
+
+
+    }
+
+    // Chọn tất cả checkbox
+    document.getElementById('selectAll').onclick = function() {
+        var checkboxes = document.getElementsByName('selected_products');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    };
+</script>
+
+{% endblock %}

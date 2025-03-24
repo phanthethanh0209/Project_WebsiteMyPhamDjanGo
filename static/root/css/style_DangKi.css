@@ -1,0 +1,178 @@
+/* begin content */
+
+#content {
+    width: 100%;
+    height: 900px;
+    background-image: url(../img/background_signup.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+#content .container {
+    width: 1260px;
+    height: 600px;
+    margin: 0 auto;
+    padding: 0px 20px;
+}
+
+
+/* begin form */
+.custom_form_box {
+    margin-top: 100px;
+    width: 420px;
+    height: 400px;
+    position: absolute;
+    right: 100px;
+    background: linear-gradient(to right, #dae3c0, #f3c4d1);
+    border: 2px solid rgba(255, 255, 255, 0.5); 
+    border-radius: 20px;
+    padding: 5px;
+    top: 35px;
+}
+.custom_dangki {
+    width: 420px;
+    height: 700px;
+    position: absolute;
+    right: 100px;
+    background: linear-gradient(to right, #dae3c0, #f3c4d1);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 5px;
+    top: 35px;
+}
+.form-box {
+    margin-top: 100px;
+    width: 420px;
+    height: 530px;
+    position: absolute;
+    right:220px;
+    background: linear-gradient(to right, #dae3c0, #f3c4d1);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 5px;
+    top: 35px;
+}
+
+.button-box {
+    width: 220px;
+    margin: 20px auto;
+}
+
+.toggle-btn {
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #9eca7d;
+    border-radius: 30px;
+    border: 0;
+    outline: none;
+    position: relative;
+    left: 62px;
+}
+
+.input-group {
+    top: 80px;
+    position: absolute;
+    width: 320px;
+    transition: .5s;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid #dee8b4;
+    outline: none;
+    background: transparent;
+}
+
+.submit-btn {
+    width: 238px;
+    height: 36px;
+    color: #fff;
+    font-weight: bold;
+    margin-top: 10px auto;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    background: #9eca7d;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+}
+
+.check-box {
+    margin: 22px 6px 0px 0px;
+}
+
+#register span {
+    color: #fff;
+}
+
+#register>span {
+    margin-bottom: 5px;
+}
+
+input[type="radio"] {
+    display: inline-block;
+}
+
+#register .radio {
+    margin-top: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 6px;
+}
+
+#register .radio span {
+    color: #fff;
+    font-size: 15px;
+    padding-right: 22px;
+}
+
+#register {
+    left: 50px;
+}
+
+#register input {
+    color: #fff;
+}
+
+#register input::placeholder {
+    color: #fff;
+}
+
+.form-message {
+    color: yellow !important;
+    font-weight: bold;
+}
+
+
+/* end form */
+
+
+/* end content */
+
+
+/* responsive */
+
+@media(max-width: 1024px) {
+    .form-box {
+        right: 10px;
+    }
+}
+
+@media(max-width: 740px) {
+    .form-box {
+        right: 20%;
+    }
+}

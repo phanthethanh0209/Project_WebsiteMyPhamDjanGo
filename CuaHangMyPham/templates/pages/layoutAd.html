@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Moon Shop Admin</title>
+    {% load static %}
+
+    <!-- Custom fonts for this template-->
+
+    <link href="{% static 'bootstrap_admin/vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'bootstrap_admin/css/sb-admin-2.css'%}" rel="stylesheet">
+
+    <style>
+        .text-outline {
+            /* -webkit-text-stroke-width: 0.2px;
+            -webkit-text-stroke-corlor: grey; */
+            text-shadow: 1px 1px 1px gray;
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #fee9e6;">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/trangChuAdmin.html">
+                <div class="mt-5">
+                    <img src="{% static 'root/img/logo.jpg'%}" class="img-fluid w-50 m-auto my-3" alt="Alternate Text" />
+                </div>
+            </a>
+
+
+
+            <div class="mt-5" style="background-color:#febdb3;">
+
+                <!-- Divider -->
+                <hr class="sidebar-divider mt-1 mb-0" style="background-color: white;">
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachNhapHang" aria-expanded="true" aria-controls="collapseTwo">
+
+                        <span class="text-outline" style="font-weight: bold; font-size: 16px; color: white;">Quản lý nhập hàng</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachNhaCungCap " 
+                        aria-expanded="true" aria-controls="collapseTwo">
+
+                        <span class="text-outline" style="font-weight: bold; font-size: 16px; color: white;">Quản lý nhà cung cấp</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+
+                    
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachLoaiSP"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                     
+                        <span class="text-outline" style="font-weight: bold; font-size: 16px; color: white;">Quản lý loại sản phẩm</span>
+                    </a>
+                </li>
+
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+                    
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachTH" 
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-outline" style="font-weight: bold; font-size: 16px; color: white;">Quản lý thương hiệu</span>
+                    </a>
+                </li>
+
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/khuyenMai " aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-outline" style="font-weight: bold; font-size: 16px; color: white;">Quản lý khuyến mãi</span>
+                    </a>
+                </li>
+
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+                    
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachSanPham" 
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-outline" style="font-weight: bold; font-size: 16px; color: white;">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/orders" aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-outline" style="font-weight: bold; font-size: 17px; color: white;">Quản lý đơn hàng</span>
+                    </a>
+                </li>
+
+                <hr class="sidebar-divider mt-0 mb-0" style="background-color: white;">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachNhanVien" aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-outline" style="font-weight: bold; font-size: 17px; color: white;">Quản lý nhân viên</span>
+                    </a>
+                </li>
+
+                <!-- 
+                <hr class="sidebar-divider mt-0 mb-1" style="background-color: white;">
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/danhSachTaiKhoan" aria-expanded="true" aria-controls="collapseTwo">
+                        <span class="text-outline" style="font-weight: bold; font-size: 17px; color: white;">Quản lý tài khoản</span>
+                    </a>
+                </li> -->
+                <hr class="sidebar-divider mt-0 mb-1" style="background-color: white;">
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#thongKeBaoCaoMenu" 
+                       aria-expanded="false" aria-controls="thongKeBaoCaoMenu">
+                        <span class="text-outline" style="font-weight: bold; font-size: 17px; color: white;">Thống kê, báo cáo</span>
+                    </a>
+                    <div id="thongKeBaoCaoMenu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <a style="color: white;" class="collapse-item" href="{% url 'thongKeDoanhThu' %}">Thống kê Doanh thu</a>
+                            <a style="color: white;" class="collapse-item" href="{% url 'thongKeSanPham' %}">Thống kê Sản phẩm</a>
+                            <a style="color: white;" class="collapse-item" href="{% url 'thongKeDonHang' %}">Thống kê Đơn hàng</a>
+                    </div>
+                </li>
+                <hr class="sidebar-divider mt-0 mb-1" style="background-color: white;">
+
+
+
+            </div>
+
+        </ul>
+
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div>
+                        <h4>Trang quản trị Moon Shop</h4>
+                    </div>
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Xin chào {{ request.session.tenTaiKhoan }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{% static 'bootstrap_admin/img/undraw_profile.svg'%}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Đến trang khách hàng
+                                </a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Đăng xuất
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    {% block content %}
+                    
+                    {% endblock %}
+
+
+                </div>
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <h6>Design by NHÓM 8 &copy; Moon Shop Admin 2024. All Rights Reserved.</h6>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Bạn có chắc chắn muốn đăng xuất không?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Không</button>
+                    <a class="btn btn-danger" href="/dangXuat">Có</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'bootstrap_admin/vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'bootstrap_admin/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'bootstrap_admin/vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'bootstrap_admin/js/sb-admin-2.min.js'%}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'bootstrap_admin/vendor/chart.js/Chart.min.js'%}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'bootstrap_adminjs/demo/chart-area-demo.js'%}"></script>
+    <script src="{% static 'bootstrap_admin/js/demo/chart-pie-demo.js'%}"></script>
+
+</body>
+
+</html>

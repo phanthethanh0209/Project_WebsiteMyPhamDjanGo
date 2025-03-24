@@ -1,0 +1,187 @@
+{% extends "pages/layoutAd.html" %}
+
+{% block title %} Trang chủ Admin - Thêm sản phẩm {% endblock %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <h2 class="w-100 text-center text-danger">Thêm sản phẩm mới</h2>
+    <form class="w-100" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="row">
+            <!-- Cột 1 -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_ten_sp">Tên sản phẩm</label>
+                    <input name="TenSP" type="text" class="form-control" id="id_ten_sp" value="">
+                </div>
+                <div class="form-group">
+                    <label for="id_ngay_sx">Ngày sản xuất</label>
+                    <input name="NSX" type="date" class="form-control" id="id_ngay_sx" value="">
+                </div>
+                <div class="form-group">
+                    <label for="id_han_sd">Hạn sử dụng</label>
+                    <input name="HSD" type="date" class="form-control" id="id_han_sd" value="">
+                </div>
+                <div class="form-group">
+                    <label for="id_gia_ban">Giá bán</label>
+                    <input name="GiaBan" type="number" step="0.01" class="form-control" id="id_gia_ban" value="">
+                </div>
+                <div class="form-group">
+                    <label for="id_trong_luong">Trọng lượng (g)</label>
+                    <input name="TrongLuong" type="number" step="0.01" class="form-control" id="id_trong_luong" value="">
+                </div>
+            </div>
+
+            <!-- Cột 2 -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_mo_ta">Mô tả</label>
+                    <textarea name="MoTa" class="form-control" id="id_mo_ta"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="id_so_luong_ton">Số lượng tồn</label>
+                    <input name="SoLuongTon" type="number" class="form-control" id="id_so_luong_ton" value="">
+                </div>
+                <div class="form-group">
+                    <label for="id_ma_loai">Tên loại</label>
+                    <select name="MaLoai" class="form-control" id="id_ma_loai" required>
+                        <option value="">Chọn loại</option>
+                        {% for loaisp in loai_sps %}
+                            <option value="{{ loaisp.0 }}">{{ loaisp.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_ma_th">Tên thương hiệu</label>
+                    <select name="MaTH" class="form-control" id="id_ma_th" required>
+                        <option value="">Chọn thương hiệu</option>
+                        {% for th in thuong_hieus %}
+                            <option value="{{ th.0 }}">{{ th.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+     <!-- Danh sách hình ảnh -->
+     <div id="imagePreview"></div>
+     <input id="uploadFile" type="file" name="image" class="img" />
+
+
+
+
+
+
+<style>
+   /* Đảm bảo các hình ảnh nằm trên cùng một hàng */
+#imagePreview {
+    width: 180px;
+    height: 180px;
+    background-position: center center;
+    background-size: cover;
+    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+    display: inline-block;
+}
+
+</style>
+
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thêm sản phẩm</button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận thêm sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn thêm sản phẩm này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-danger">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>  
+</div>
+
+
+
+</form>
+
+
+<script>
+
+// // Thêm hình ảnh mới vào danh sách khi nhấn nút "Thêm 1 hình ảnh"
+// document.querySelector('#addProduct').addEventListener('click', function() {
+//     // Tạo một hàng mới cho hình ảnh
+//     const newProductRow = document.createElement('div');
+//     newProductRow.classList.add('col-md-2', 'mb-3', 'product-row');
+    
+//     // Cấu trúc HTML cho mỗi hàng (gồm 1 hình ảnh và nút chọn file)
+//     newProductRow.innerHTML = `
+//         <div class="d-flex align-items-center justify-content-center">
+//             <img class="preview-image img-thumbnail" src="#" alt="Preview" style="display: none;">
+//             <input name="HinhAnh" type="file" class="form-control-file image-input" accept="image/*" style="display: none;">
+//         </div>
+//     `;
+    
+//     // Thêm hàng mới vào danh sách hình ảnh
+//     document.querySelector('#danhSachSanPham').appendChild(newProductRow);
+
+//     // Gắn sự kiện click vào vùng chứa hình ảnh (để mở dialog chọn file)
+//     newProductRow.querySelector('.product-row').addEventListener('click', function() {
+//         const input = newProductRow.querySelector('.image-input');
+//         input.click();  // Mở hộp thoại chọn tệp khi click vào ô vuông
+//     });
+
+//     // Gắn sự kiện vào input file trong hàng mới
+//     newProductRow.querySelector('.image-input').addEventListener('change', function() {
+//         const image = newProductRow.querySelector('.preview-image');
+//         const file = this.files[0];
+//         if (file) {
+//             const reader = new FileReader();
+//             reader.onload = function(e) {
+//                 image.src = e.target.result;
+//                 image.style.display = 'block';  // Hiển thị ảnh sau khi chọn
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// });
+
+// // Xử lý khi người dùng chọn ảnh (dùng sự kiện trên tất cả các ảnh hiện có)
+// document.querySelectorAll('.preview-image').forEach(image => {
+//     image.addEventListener('click', function() {
+//         const input = this.closest('.product-row').querySelector('.image-input');
+//         input.click();  // Mở hộp thoại chọn tệp khi click vào hình ảnh
+//     });
+// });
+
+// // Xử lý khi người dùng chọn ảnh
+// document.querySelectorAll('.image-input').forEach(input => {
+//     input.addEventListener('change', function() {
+//         const image = this.closest('.product-row').querySelector('.preview-image');
+//         const file = this.files[0];
+//         if (file) {
+//             const reader = new FileReader();
+//             reader.onload = function(e) {
+//                 image.src = e.target.result;
+//                 image.style.display = 'block';  // Hiển thị ảnh sau khi chọn
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// });
+
+</script>
+
+
+{% endblock %}

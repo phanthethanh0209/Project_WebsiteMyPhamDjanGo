@@ -1,0 +1,54 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Đăng ký
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div id="main">
+    <div id="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="background-color: lightblue; border-radius: 30px; padding: 30px">
+                    <h2 class="w-100 text-center p-3 text-danger"> Đăng ký</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            <label for="id_name">Tên</label>
+                            <input name="name" type="text" class="form-control" id="id_name" value="{{ form.name.value|default_if_none:'' }}">
+                            {% if form.name.errors %}
+                            <span class="text-danger">{{ form.name.errors }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_email">Email</label>
+                            <input name="email" type="text" class="form-control" id="id_email" value="{{ form.email.value|default_if_none:'' }}">
+                            <span class="text-danger">{{ form.email.errors }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_phone">Số điện thoại</label>
+                            <input name="phone" type="text" class="form-control" id="id_phone" value="{{ form.phone.value|default_if_none:'' }}">
+                            <span class="text-danger">{{ form.phone.errors }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password">Mật khẩu</label>
+                            <input name="password" type="password" class="form-control" id="id_password" value="{{ form.password.value|default_if_none:'' }}">
+                            <span class="text-danger">{{ form.password.errors }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_confirm_password">Nhập lại mật khẩu</label>
+                            <input name="confirm_password" type="password" class="form-control" id="id_confirm_password" value="{{ form.confirm_password.value|default_if_none:'' }}">
+                            <span class="text-danger">{{ form.confirm_password.errors }}</span>
+                        </div>
+                        <div class="text-center mt-2" style=" display: flex; justify-content: center;">
+                            <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

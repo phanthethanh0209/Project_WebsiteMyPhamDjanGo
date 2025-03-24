@@ -1,0 +1,151 @@
+{% extends "pages/layoutAd.html" %}
+
+{% block title %} Thống kê Đơn hàng {% endblock %}
+
+{% block content %}
+
+<style>
+    .table
+    {
+        font-size: 0.8rem;
+    }
+    .card {
+        font-size: 0.3rem; /* Giảm kích thước font của card */
+        padding: 0.1rem; /* Giảm padding */
+    }
+
+    .card .card-title {
+        font-size: 1rem; /* Giảm kích thước tiêu đề */
+    }
+
+    .card .card-text {
+        font-size: 1.5rem; /* Giảm kích thước văn bản */
+    }
+
+    canvas {
+        max-width: 270px; /* Giới hạn chiều rộng của biểu đồ */
+        max-height: 270px; /* Giới hạn chiều cao của biểu đồ */
+        margin: auto; /* Căn giữa biểu đồ */
+    }
+</style>
+
+
+<div class="container mt-5">
+    <h1 class="text-center text-primary font-weight-bold">Thống kê Đơn hàng</h1>
+    <div class="text-right mb-3">
+        <a href="{% url 'export_don_hang_excel' %}" class="btn btn-success">
+            <i class="fas fa-file-excel"></i> Xuất Báo Cáo Đơn hàng
+        </a>
+    </div>
+
+    <!-- Cards Tổng quan -->
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng số đơn hàng</h5>
+                    <p class="card-text display-4">{{ tong_so_don_hang }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Tỉ lệ đơn hàng chưa xác nhận</h5>
+                    <p class="card-text display-4">{{ ty_le_huy_don }}%</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Đơn hàng đang xử lý</h5>
+                    <p class="card-text display-4">{{ don_hang_dang_xu_ly }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bảng Đơn hàng theo trạng thái -->
+    <div class="mt-5">
+        <h4>Bảng Đơn hàng theo Trạng thái</h4>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Trạng thái</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trang_thai, so_luong in don_hang_trang_thai %}
+                <tr>
+                    <td>{{ trang_thai }}</td>
+                    <td>{{ so_luong }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center">Không có dữ liệu</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Biểu đồ Trạng thái đơn hàng -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h4>Biểu đồ Trạng thái Đơn hàng</h4>
+            <canvas id="chartTrangThaiDonHang"></canvas>
+        </div>
+
+        <!-- Bảng Top 5 khách hàng -->
+        <div class="col-md-6">
+            <h4>Top 5 Khách hàng</h4>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Khách hàng</th>
+                        <th>Số đơn hàng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ho_ten, so_don_hang in don_hang_theo_khach_hang %}
+                    <tr>
+                        <td>{{ ho_ten }}</td>
+                        <td>{{ so_don_hang }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center">Không có dữ liệu</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Biểu đồ Trạng thái Đơn hàng
+    const trangThaiDonHangCtx = document.getElementById('chartTrangThaiDonHang');
+    new Chart(trangThaiDonHangCtx, {
+        type: 'pie',
+        data: {
+            labels: [{% for trang_thai, _ in don_hang_trang_thai %}"{{ trang_thai }}",{% endfor %}],
+            datasets: [{
+                data: [{% for _, so_luong in don_hang_trang_thai %}{{ so_luong }},{% endfor %}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { enabled: true },
+            },
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid mt-3">
+    <h2>Danh sách User</h2>
+    <a class="btn btn-success mt-2 mb-2" href="/admin/add_user">+ Thêm user</a>
+    <table class="table table-bordered">
+        <thead class="table-danger text-black ">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Vai trò</th>
+                <th scope="col">Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in listUser %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal{{ user.id }}">
+                        Xóa
+                    </button>
+                    <a class="btn btn-primary" href="/admin/edit_user/{{ user.id }}">Sửa</a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmDeleteModal{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ user.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel{{ user.id }}">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn có chắc chắn muốn xóa người dùng này không?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                    <form action="/admin/users/{{ user.id }}/delete" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- PHÂN TRANG -->
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <!-- Nút "Previous" -->
+                        <li class="page-item {% if listUser.number <= 1 %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/users/?page={{ previous_page }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Hiển thị các nút số trang -->
+                        {% for i in page_range %}
+                            <li class="page-item {% if i == listUser.number %}active{% endif %}">
+                                <a class="page-link" href="/admin/users//?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <!-- Nút "Next" -->
+                        <li class="page-item {% if listUser.number >= total_pages %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/users/?page={{ next_page }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

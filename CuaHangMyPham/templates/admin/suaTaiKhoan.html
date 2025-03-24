@@ -1,0 +1,63 @@
+{% extends "pages/layoutAd.html" %} 
+{% block title %} Trang chủ admin 
+{% endblock %} 
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row justify-content-center">
+            <h2 class="w-100 text-center text-danger"> Chỉnh sửa thông tin tài khoản</h2>
+            <form class="w-50" method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_name">Tên tài khoản</label>
+                    <input name="TenTK" type="text" class="form-control" id="id_name" value="{{ TenTK }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Mật khẩu</label>
+                    <input name="MatKhau" type="password" class="form-control" id="id_password" value="{{ MatKhau }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input name="Email" type="text" class="form-control" id="id_email" value="{{ Email }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_role">Vai trò</label>
+                    <select name="VaiTro" class="form-control" id="id_role">
+                        <option value="admin" {% if VaiTro == "admin" %}selected{% endif %}>Admin</option>
+                        <option value="user" {% if VaiTro == "user" %}selected{% endif %}>User</option>
+                    </select>
+                </div>
+
+                <!-- Button trigger modal -->
+                <div class="text-center mt-2" style=" display: flex; justify-content: center;">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Cập nhật</button>
+                </div>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận cập nhật thông tin người dùng</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có muốn cập nhật thông tin người dùng này không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-danger">Đồng ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>
+
+{% endblock %}

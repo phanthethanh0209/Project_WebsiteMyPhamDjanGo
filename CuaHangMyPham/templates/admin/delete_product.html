@@ -1,0 +1,88 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Product</title>
+    <style>
+        body1 {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container1 {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #dc3545;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            text-align: left;
+        }
+        li strong {
+            display: inline-block;
+            width: 100px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <h1>Delete Product</h1>
+        <p>Are you sure you want to delete the following product?</p>
+        <ul>
+            <li><strong>Category:</strong> {{ product.category.name }}</li>
+            <li><strong>Brand:</strong> {{ product.brand.name }}</li>
+            <li><strong>Name:</strong> {{ product.name }}</li>
+            <li><strong>Price:</strong> {{ product.price }}</li>
+            <li><strong>Description:</strong> {{ product.description }}</li>
+            <li><strong>Image URL:</strong><img src="{% static 'img/' %}{{ product.image }}" alt="Hình ảnh sản phẩm" style="height: 100px;width: 100px;"></li>
+        </ul>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            <a href="{% url 'products' %}" class="btn">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

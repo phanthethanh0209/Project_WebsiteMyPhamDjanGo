@@ -1,0 +1,230 @@
+{% extends "pages/layout.html" %}
+{% block title %}
+    Sản phẩm
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+<div id="main">
+    <div id="content">
+        <div class="grid">
+            <div class="grid__row">
+                <!--THANH BAR BÊN TRÁI-->
+                <div class="grid_column-2">
+                    <div class="aside-filter">
+                        <div class="headding-filter">
+                            <h2 class="title-head">Bộ lọc</h2>
+                            <p>Giúp bạn tìm kiếm sản phẩm nhanh hơn</p>
+                        </div>
+                        <hr>
+                        <div class="filter">
+                            <h3>Thương hiệu</h3>
+                            <div class="search-filter">
+                                <input type="text" placeholder="Tìm thương hiệu">
+                                <a class="bg-icon-search" href=""><i class="ti-search "></i></a>
+                            </div>
+                            <div class="filter-brand">
+                                <ul class="filter-option">
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>3CE</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>AFC</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>AGAPAN</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>3W Clinic</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>A-DERMA</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>Vichy</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>Victoria's</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <h3>Giá sản phẩm</h3>
+                            <div class="filter-price">
+                                <ul class="filter-option">
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>Giá dưới 100.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>100.000đ - 200.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>200.000đ - 300.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>300.000đ - 500.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>500.000đ - 1.000.000đ</span>
+                                    </li>
+                                    <li class="filter-item">
+                                        <input type="checkbox"><span>Trên 1.000.000đ</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="featured-products">
+                        <h2 class="title" style="font-size: 22pt"><a href="#">Sản phẩm nổi bật</a></h2>
+                        <div class="list-product">
+                            <!-- @*Lấy 5 sản phẩm*@
+                            @for (int i = 0; i < 5 && i < Model.Count; i++)
+                            {
+                                var product = Model[i];
+                                <div class="product-item">
+                                    <div class="product-img">
+                                        <a href="/SanPham/ChiTietSP/@product.MaSP">
+                                            <img title="@product.TenSP" src="~/Content/images/@product.TenHinh" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="product-shop">
+                                        <h3 class="product-name" title="@product.TenSP">
+                                            <a href="/SanPham/ChiTietSP/@product.MaSP">@product.TenSP</a>
+                                        </h3>
+                                        <div class="product-item-price">@string.Format("{0:N0}", @product.DonGiaBan) đ</div>
+                                    </div>
+                                </div>
+                            } -->
+                        </div>
+                    </div>
+                </div>
+
+                <!--DANH SÁCH SP LOAD LÊN TỪ DATABASE-->
+                <div class="grid_colum-10">
+                    <div class="grid__row">
+
+                        <div class="home-filter-headding" style="height:60px;width:100%">
+                            <h1 class="home-title-product">
+                                Danh Sách Sản Phẩm
+                            </h1>
+                            <div class="home-filter">
+                                <ul class="list-filter">
+                                    Ưu tiên xem:
+                                    <li><a href=""><i class="ti-check"></i> Hàng mới</a> </li>
+                                    <li><a href=""><i class="ti-check"></i> Giá tăng dần</a> </li>
+                                    <li><a href=""><i class="ti-check"></i> Giá giảm dần</a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% for product in SanPhams %}
+                        <div class="grid_column-2-4">
+                            <div class="home-product-item">
+                                <div class="product-img">
+                                    <a href="/shop_detail/{{ product.0 }}"><img src="{% static 'img/' %}{{ product.2 }}" alt="{{ product.1 }}" style="width: 220px; height: 220px;"></a>
+                                </div>
+                                <h4 class="product-item-name">
+                                    <a href="{% url 'shop_detail' product.0 %}">{{ product.1 }}</a>
+                                </h4>
+                                <div class="product-item-price">
+                                    {% if product.7 == 0 %}
+                                    <span class="price-current">{{ product.3|floatformat:0 }} </span>
+                                    <span class="vnd">₫</span>
+                                    {% else %}
+                                    <span class="price-current">{{ product.8|floatformat:0 }}</span>
+                                    <span class="vnd">₫</span>
+                                    <span class="price-old">{{ product.3|floatformat:0 }} ₫</span>
+                                    {% endif %}
+                                </div>
+                                <div class="product-item-action">
+                                    <div> </div>
+                                    <div class="rating-star d-flex align-items-center">
+                                        {% if product.5 == 1 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 2 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 3 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 4 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% elif product.5 == 5 %}
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        <i class="star-gold fa-solid fa-star"></i>
+                                        {% else %}
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        <i class=" fa-solid fa-star"></i>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <a class="product-item-btn-addcart" href="/addCart/?action=addcart&id_product={{ product.0 }}">Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <!-- Nút "Previous" -->
+                            <li class="page-item {% if dm_sp.number <= 1 %} disabled {% endif %}">
+                                <a class="page-link" href="/shop_Thuonghieu?page={{ previous_page }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <!-- Hiển thị các nút số trang -->
+                            {% for i in page_range %}
+                                <li class="page-item {% if i == dm_sp.number %}active{% endif %}">
+                                    <a class="page-link" href="/shop_Thuonghieu?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+
+                            <!-- Nút "Next" -->
+                            <li class="page-item {% if dm_sp.number >= total_pages %} disabled {% endif %}">
+                                <a class="page-link" href="/shop_Thuonghieu?page={{ next_page }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

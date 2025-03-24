@@ -1,0 +1,102 @@
+{% extends "pages/layoutAd.html" %}
+{% block title %}
+    Trang chủ admin
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid mt-3">
+    <h2>Danh sách sản phẩm</h2>
+    <a class="btn btn-outline-info mt-2 mb-2 float-right" href="/admin/themSP">+ Thêm sản phẩm</a>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm </th>
+                <th scope="col">Giá bán </th>
+                <th scope="col">Số lượng tồn </th>
+                <th scope="col">Tên thương hiệu</th>
+                <th scope="col">Tên loại</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sp in listSP %}
+            <tr>
+                <td>{{ sp.0 }}</td> 
+                <td>{{ sp.1 }}</td>  
+                <td>{{ sp.2 }}</td>  
+                <td>{{ sp.3 }}</td> 
+                <td>{{ sp.4 }}</td> 
+                <td>{{ sp.5 }}</td> 
+                
+                <td>
+                    <a class="btn btn-outline-primary" href="/admin/xemCT/{{ sp.0 }}">Xem chi tiết</a>
+                    <a class="btn btn-outline-warning" href="{% url 'suaSP' masanpham=sp.0 %}">Sửa</a>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal{{ sp.0 }}">
+                        Xóa
+                    </button>                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmDeleteModal{{ sp.0 }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ sp.0 }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel{{ sp.0 }}">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn có chắc chắn muốn xóasản phẩm này không?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                    <form action="{% url 'xoaSP' masp=sp.0 %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>                                             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>       
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+    <!-- PHÂN TRANG -->
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <!-- Nút "Previous" -->
+                        <li class="page-item {% if listSP.number <= 1 %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/danhSachSanPham/?page={{ previous_page }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Hiển thị các nút số trang -->
+                        {% for i in page_range %}
+                            <li class="page-item {% if i == listSP.number %}active{% endif %}">
+                                <a class="page-link" href="/admin/danhSachSanPham/?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <!-- Nút "Next" -->
+                        <li class="page-item {% if listSP.number >= total_pages %} disabled {% endif %}">
+                            <a class="page-link" href="/admin/danhSachSanPham/?page={{ next_page }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
